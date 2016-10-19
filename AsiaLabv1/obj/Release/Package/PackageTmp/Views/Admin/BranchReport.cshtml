@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "BranchReport";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+@section Banner
+{
+    <div class="banner">
+
+        <h2>
+            <a href="@Url.Action("AdminDashboard", "Main")">Dashboard</a>
+            <i class="fa fa-angle-right"></i>
+            <span>Branch Report</span>
+        </h2>
+    </div>
+}
+
+@*---------Start Side Navigation Menu-----------*@
+
+@section NavMenu
+{
+    <li>
+        <a href="@Url.Action("AdminDashboard","Main")" class=" hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span class="nav-label">Dashboard</span> </a>
+    </li>
+
+    <li>
+        <a href="@Url.Action("TestsManagement", "Admin")" class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i> <span class="nav-label">Tests Management</span></a>
+
+    </li>
+    <li>
+        <a href="@Url.Action("DoctorReferrals", "Admin")" class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i> <span class="nav-label">Doctor Referrals</span></a>
+    </li>
+    <li>
+        <a href="@Url.Action("Register","Admin")" class=" hvr-bounce-to-right"> <i class="fa fa-indent nav_icon"></i>Employee Management</a>
+    </li>
+    <li>
+        <a href="@Url.Action("Templates","Admin")" class="hvr-bounce-to-right"> <i class="fa fa-indent nav_icon"></i>Templates</a>
+    </li>
+
+    <li>
+        <a href="@Url.Action("Accounting", "Admin")" class=" hvr-bounce-to-right"><i class="fa fa-th nav_icon"></i> <span class="nav-label">Accounting</span> </a>
+    </li>
+
+    <li>
+    <li>
+        <a href="@Url.Action("BranchReport", "Admin")" class=" hvr-bounce-to-right"> <i class="fa fa-area-chart nav_icon"></i>Branch Report</a>
+    </li>
+
+    @*------------ End Side Navigation Menu----------*@
+
+
+    @*------------- Start Main Content Code-------------*@
+
+    <!--//grid-->
+  }
+<div class="typo-grid">
+
+    <div class="typo-1">
+
+
+        <div class="grid_3 grid_5">
+            <h3 class="head-top">Branch Report</h3>
+
+
+            <br />
+            <h5>Content Coming Soon!</h5>
+        </div>
+
+    </div>
+</div>

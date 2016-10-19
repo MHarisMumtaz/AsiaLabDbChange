@@ -1,0 +1,363 @@
+﻿@{
+    ViewBag.Title = "DoctorDashboard";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+@model AsiaLabv1.Models.UserModel
+@section Banner
+{
+    @*<div class="banner">
+
+            <h2>
+                <a href="index.html">Home</a>
+                <i class="fa fa-angle-right"></i>
+                <span>Approve Test</span>
+            </h2>
+        </div>*@
+}
+
+@*---------Start Side Navigation Menu-----------*@
+
+@section NavMenu
+{
+    <li>
+        <a href="@Url.Action("DoctorDashboard","Main")" class=" hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span class="nav-label">Dashboard</span> </a>
+    </li>
+
+
+
+
+}
+@*------------ End Side Navigation Menu----------*@
+
+
+@*------------- Start Main Content Code-------------*@
+<div class="col-md-2" id="labbox">
+
+    <br />
+    <div id="labdiv" style="border: solid;  color: #d95459; border-width:1px" class="content-top-1">
+        <h4 id="labh" style="text-align:center; color:black">Lab</h4>
+
+        <div class="clearfix"> </div>
+    </div>
+
+</div>
+
+<div class="col-md-2" id="xraybox">
+
+    <br />
+    <div id="xraydiv" style="border: solid; color: #d95459; border-width:1px" class="content-top-1">
+        <h4 id="xrayh" style="text-align:center; color:black">X-RAY</h4>
+
+        <div class="clearfix"> </div>
+    </div>
+
+</div>
+
+<div class="col-md-2" id="ultrabox">
+
+    <br />
+    <div id="ultradivv" style="border: solid; color: #d95459; border-width:1px" class="content-top-1">
+        <h4 id="ultrahh" style="text-align:center; color:black">Ultrasound</h4>
+
+        <div class="clearfix"> </div>
+    </div>
+
+</div>
+<div class="col-md-4 ">
+    <div style="border: solid; color: #d95459; border-width:1px" class="content-top-1">
+        <div class="top-content">
+            <h4 id="showack" style="text-align:center; color:black">Tests Pending to Perform</h4><br />
+            <div style="text-align:center" class="top-content">
+                <label id="testscount"></label>
+                <i style="color:black" id="waiting" class="fa fa-spinner fa-spin fa fa-fw"></i>
+            </div>
+
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+
+</div>
+<div class="content-top">
+
+
+
+
+    <div class="clearfix"> </div>
+</div>
+<!---->
+<div class="typo-grid">
+
+    <div class="typo-1">
+
+
+        <div class="grid_3 grid_5">
+
+            <div class="but_list">
+                <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+                    <ul id="myTab" class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">Pending</a></li>
+                        <li role="presentation"><a href="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile">Search Tests</a></li>
+                    </ul>
+                    <div id="myTabContent" class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
+
+
+                            <div class="tab-content">
+
+                                <div class="tab-pane active" id="horizontal-form">
+                                    <div class="horz-grid">
+                                        <div class="grid-hor">
+                                            <h4 id="grid-example-mixed-complete">Pending Tests List for Approval </h4>
+
+                                        </div>
+                                        <!---->
+
+                                        <div id="grid"></div>
+
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab">
+
+                            <h3>Search Tests By Date</h3>
+                            <div class="tab-content">
+
+                                <div class="tab-pane active" id="horizontal-form">
+
+                                    <form class="form-horizontal">
+                                        <br />
+                                        <div class="form-group">
+                                            <label for="pname" class="col-sm-2 control-label">From Date</label>
+                                            <div class="col-sm-8">
+                                                <input type="date" class="form-control1" id="focusedinput">
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pname" class="col-sm-2 control-label">To Date</label>
+                                            <div class="col-sm-8">
+                                                <input type="date" class="form-control1" id="focusedinput">
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-sm-2 login-do" style="margin-left:40%">
+                                            <label class="hvr-shutter-in-horizontal login-sub">
+                                                <input type="submit" value="See Tests" onclick="window.location='signup.html';" />
+                                            </label>
+                                        </div>
+                                        <br /><br /><br /><br /><br />
+
+                                        <br />
+
+
+                                        <div class="clearfix"> </div>
+                                    </form>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+<script type="text/javascript">
+
+    $('#waiting').hide();
+
+    $('#labbox').click(function () {
+
+        $("#testscount").hide();
+        $("#labdiv").css('background-color', '#d95459');
+        $("#labh").css('color', '#FFFFFF');
+
+        $("#xraydiv").css('background-color', '#FFFFFF');
+        $("#xrayh").css('color', '#000000');
+
+        $("#ultradivv").css('background-color', '#FFFFFF');
+        $("#ultrahh").css('color', '#000000');
+
+        $.ajax({
+            type: 'POST',
+            url: '/Doctor/DeptName/',
+            data: { deptname: 'Laboratory' },
+            dataType: "json",
+
+            success: function () {
+                //alert('Successfull');
+                kendoGrid();
+            },
+
+        });
+    });
+
+    $('#xraybox').click(function () {
+        $("#testscount").hide();
+        $("#xraydiv").css('background-color', '#d95459');
+        $("#xrayh").css('color', '#FFFFFF');
+
+        $("#labdiv").css('background-color', '#FFFFFF');
+        $("#labh").css('color', '#000000');
+
+        $('#ultradivv').css('background-color', '#FFFFFF');
+        $('#ultrahh').css('color', '#000000');
+
+
+        $.ajax({
+            type: 'POST',
+            url: '/Doctor/DeptName/',
+            data: { deptname: 'XRAY' },
+            dataType: "json",
+
+            success: function () {
+                //alert('Successfull');
+                kendoGrid();
+            },
+
+        });
+    });
+
+    $('#ultrabox').click(function () {
+        $("#testscount").hide();
+
+        $("#ultradivv").css('background-color', '#d95459');
+        $("#ultrahh").css('color', '#FFFFFF');
+
+        $("#xraydiv").css('background-color', '#FFFFFF');
+        $("#xrayh").css('color', '#000000');
+
+        $('#labdiv').css('background-color', '#FFFFFF');
+        $('#labh').css('color', '#000000');
+
+        $.ajax({
+            type: 'POST',
+            url: '/Doctor/DeptName/',
+            data: { deptname: 'ULTRA SOUND' },
+            dataType: "json",
+
+            success: function () {
+                //alert('Successfull');
+                kendoGrid();
+            },
+
+        });
+    });
+
+    setInterval(kendoGrid, 60000);
+
+    //window.onload = kendoGrid();
+
+    function kendoGrid() {
+
+        $('#waiting').show();
+        var crudServiceBaseUrl = "/Doctor",
+                dataSource = new kendo.data.DataSource({
+                    transport: {
+                        read: {
+                            url: crudServiceBaseUrl + "/GetPatientInfo",
+                            dataType: "json",
+
+                        },
+
+                        parameterMap: function (options, operation) {
+
+                            if (operation !== "read" && options.models) {
+                                return { models: kendo.stringify(options.models) };
+                            }
+                        },
+
+                    },
+                    batch: true,
+                    pageSize: 20,
+                    schema: {
+                        model: {
+                            id: "Id",
+                            fields: {
+                                PatientNumber: { type: "string" },
+                            }
+                        }
+                    },
+                    completed: function () { },
+                    requestEnd: function (e) { $('#grid').data('kendoGrid').refresh(); },
+                });
+
+        $("#grid").kendoGrid({
+            dataSource: dataSource,
+            dataBound: onDataBound,
+            pageable: true,
+            height: 550,
+            //toolbar: ["create"],
+            columns: [
+
+                  { field: "PatientNumber", title: "Patient Id", width: "130px" },
+                  { field: "PatientName", title: "Patient Name", width: "130px" },
+                  { command: { text: "Approve Test", click: redirect }, title: "", width: "250px" },
+            ],
+            editable: "inline"
+        });
+
+
+    };
+
+    function redirect(e) {
+
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+
+        $.ajax({
+            type: 'POST',
+            url: '/Doctor/Temp/',
+            data: { patientId: dataItem.id },
+            dataType: "json",
+
+        });
+
+        window.location.href = "/Doctor/ApproveTest"
+    }
+
+    function onDataBound(arg) {
+        var grid = $("#grid").data("kendoGrid");
+        var dataSource = grid.dataSource;
+
+        var totalRecords = dataSource.total();
+        //if (totalRecords == 0) {
+        //    $("#testscount").text('-');
+        //}
+        //else {
+        //    $("#testscount").text(totalRecords);
+        //}
+        $("#testscount").show();
+        $("#testscount").text(totalRecords);
+        $('#waiting').hide();
+    }
+
+
+
+</script>
+
+
+
+
+
+<!----->
+<!--//content-->
+@*------------- End Main Content Code-------------*@
+
+

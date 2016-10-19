@@ -1,0 +1,165 @@
+﻿@{
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+@model AsiaLabv1.Models.UserModel
+
+@section Banner
+{
+    @*<div class="banner">
+
+            <h2>
+                <a href="index.html">Home</a>
+                <i class="fa fa-angle-right"></i>
+                <span>Admin Dashboard</span>
+            </h2>
+        </div>*@
+}
+
+@*---------Start Side Navigation Menu-----------*@
+
+@section NavMenu
+{
+    <li>
+        <a href="@Url.Action("AdminDashboard","Main")" class=" hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span class="nav-label">Dashboard</span> </a>
+    </li>
+
+    <li class="active">
+        <a href="@Url.Action("TestsManagement","Admin")" class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i> <span class="nav-label">Tests Management</span></a>
+
+    </li>
+    <li>
+        <a href="@Url.Action("DoctorReferrals", "Admin")" class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i> <span class="nav-label">Doctor Referrals</span></a>
+    </li>
+    <li>
+        <a href="@Url.Action("Register","Admin")" class=" hvr-bounce-to-right"> <i class="fa fa-indent nav_icon"></i>Employee Management</a>
+    </li>
+    <li>
+        <a href="@Url.Action("Templates","Admin")" class="hvr-bounce-to-right"> <i class="fa fa-indent nav_icon"></i>Templates</a>
+    </li>
+
+    <li>
+        <a href="@Url.Action("Accounting", "Admin")" class=" hvr-bounce-to-right"><i class="fa fa-th nav_icon"></i> <span class="nav-label">Accounting</span> </a>
+    </li>
+
+    <li>
+    <li>
+        <a href="@Url.Action("BranchReport", "Admin")" class=" hvr-bounce-to-right"> <i class="fa fa-area-chart nav_icon"></i>Branch Report</a>
+    </li>
+
+}
+@*------------ End Side Navigation Menu----------*@
+@section Abc
+{
+    <iframe style="float:right; margin-top:1%" src="http://free.timeanddate.com/clock/i58svgow/n757/fn16/fs16/fc900/tcccc/ftb/tt0/ts1/ta1" frameborder="0" width="379" height="21"></iframe>
+}
+@*------------- Start Main Content Code-------------*@
+
+<div class="grid-form">
+
+    <!----->
+    <!---->
+    <div class="grid-form1">
+        <h4>Branch Revenues - Department Wise</h4>
+        <form action="/Main/GetRevenue" class="form-horizontal" method="post">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">From</label>
+                <div class="col-sm-8">
+                    <input type="date" name="Sdate" class="form-control1 dropdown-toggle" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">To</label>
+                <div class="col-sm-8">
+                    <input type="date" name="Edate" class="form-control1 dropdown-toggle" />
+                </div>
+
+
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label"></label>
+                <div class="col-sm-8">
+                    <input style="margin-left:13%" id="btnrev" type="submit" value="Show Revenue" class="btn btn-danger" />
+                </div>
+
+
+            </div>
+            
+        </form>
+
+        <div class="tab-content">
+
+            <div>From: <label style="color: #d95459">@TempData["StartDate"]</label></div>
+
+            <div>To: <label style="color: #d95459">@TempData["EndDate"]</label></div>
+           
+
+
+
+
+            <div class="tab-pane active" id="horizontal-form">
+                <div class="horz-grid">
+
+                    <div style="width:100%" class="row show-grid">
+                        <div class="col-md-2" style="text-align: center; border-right: solid; border-right-color: #d95459">&nbsp;</div>
+
+                        <div class="col-md-2" style="text-align:center">Gulistan-e-Johar</div>
+                        <div class="col-md-2" style="text-align:center">Liaquatabad</div>
+                        <div class="col-md-2" style="text-align:center">North Karachi</div>
+                        <div class="col-md-2" style="text-align:center">Surjani</div>
+                        <div class="col-md-2" style="text-align:center">Garden</div>
+
+                    </div>
+
+                    <div style="border: 2px; border-style: solid; width:100%;  color: #d95459; ">
+                    </div>
+                    <div style="width:100%" class="row show-grid">
+                        <div class="col-md-2" style="border-right: solid; border-right-color: #d95459">Lab</div>
+                        <div class="col-md-2" style="text-align:center">@TempData["PayJoharLab"]</div>
+                        <div class="col-md-2" style="text-align:center">@TempData["PayLiaquatabadLab"]</div>
+                        <div class="col-md-2" style="text-align:center">@TempData["PayNorthLab"]</div>
+                        <div class="col-md-2" style="text-align:center">@TempData["PaySurjaniLab"]</div>
+                        <div class="col-md-2" style="text-align:center">@TempData["PayGardenLab"]</div>
+                    </div>
+                    <div style="width:100%" class="row show-grid">
+                        <div class="col-md-2" style="border-right: solid; border-right-color: #d95459">X-RAY</div>
+                        <div class="col-md-2" style="text-align:center">@TempData["PayJoharXRAY"]</div>
+                        <div class="col-md-2" style="text-align:center">@TempData["PayLiaquatabadXRAY"]</div>
+                        <div class="col-md-2" style="text-align:center">@TempData["PayNorthXRAY"]</div>
+                        <div class="col-md-2" style="text-align:center">@TempData["PaySurjaniXRAY"]</div>
+                        <div class="col-md-2" style="text-align:center">@TempData["PayGardenXRAY"]</div>
+
+                    </div>
+                    <div style="width:100%" class="row show-grid">
+                        <div class="col-md-2" style="border-right: solid; border-right-color: #d95459">Ultrasound</div>
+                        <div class="col-md-2" style="text-align:center">@TempData["PayJoharUltra"]</div>
+                        <div class="col-md-2" style="text-align:center">@TempData["PayLiaquatabadUltra"]</div>
+                        <div class="col-md-2" style="text-align:center">@TempData["PayNorthUltra"]</div>
+                        <div class="col-md-2" style="text-align:center">@TempData["PaySurjaniUltra"]</div>
+                        <div class="col-md-2" style="text-align:center">@TempData["PayGardenUltra"]</div>
+
+                    </div>
+                    <div style="width:100%" class="row show-grid">
+                        <div class="col-md-2" style="border-right: solid; border-right-color: #d95459; text-align:right">Total</div>
+                        <div class="col-md-2" style="text-align:center">@TempData["TotalPayJohar"]</div>
+                        <div class="col-md-2" style="text-align:center">@TempData["TotalPayLiaquatabad"]</div>
+                        <div class="col-md-2" style="text-align:center">@TempData["TotalPayNorth"]</div>
+                        <div class="col-md-2" style="text-align:center">@TempData["TotalPaySurjani"]</div>
+                        <div class="col-md-2" style="text-align:center">@TempData["TotalPayGarden"]</div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<script>
+   
+</script>
+@*------------- End Main Content Code-------------*@

@@ -1,0 +1,306 @@
+﻿@{
+    ViewBag.Title = "ApproveTest";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+@section Banner
+{
+    <div class="banner">
+
+        <h2>
+            @if (Session["role"].ToString() == "Receptionist")
+            {
+                <a href="@Url.Action("ReceptionistDashboard", "Main")">Dashboard</a>
+
+            }
+            @if (Session["role"].ToString() == "Admin")
+            {
+                <a href="@Url.Action("AdminDashboard", "Main")">Dashboard</a>
+
+            }
+            @if (Session["role"].ToString() == "Doctor")
+            {
+                <a href="@Url.Action("DoctorDashboard", "Main")">Dashboard</a>
+
+            }
+            @if (Session["role"].ToString() == "Technician")
+            {
+                <a href="@Url.Action("TechnicianDashboard", "Main")">Dashboard</a>
+
+            }
+            <i class="fa fa-angle-right"></i>
+            <span>Approve Test</span>
+        </h2>
+    </div>
+}
+
+@*---------Start Side Navigation Menu-----------*@
+
+@section NavMenu
+{
+    <li>
+        <a href="@Url.Action("DoctorDashboard","Main")" class=" hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span class="nav-label">Dashboard</span> </a>
+    </li>
+
+
+
+
+}
+@*------------ End Side Navigation Menu----------*@
+
+
+@*------------- Start Main Content Code-------------*@
+
+<!--grid-->
+<div class="grid-form">
+
+    <!----->
+    <!---->
+    <div class="grid-form1">
+
+        <div class="tab-content">
+
+            <div class="tab-pane active" id="horizontal-form">
+                <form>
+                    <div class="horz-grid">
+                        <div class="grid-hor" id="patientinfo">
+                            <h4 id="grid-example-mixed-complete">Approve Test</h4><br />
+
+
+
+
+
+                        </div>
+                        <!---->
+
+                        <div class="row show-grid">
+                            <div class="col-xs-6 col-sm-3">Test Name</div>
+                            <div class="col-md-1">Result</div>
+
+                            <div class="col-xs-6 col-sm-3">Lower Bound</div>
+                            <div class="col-xs-6 col-sm-3">Upper Bound</div>
+                            <div class="col-md-1">Unit</div>
+
+
+                        </div>
+                        <div style="border: 2px; border-style: solid; width:92%; color: #d95459; ">
+
+                        </div>
+
+                        <div class="row show-grid" id="tests">
+
+                        </div>
+
+                        @*<div class="row show-grid">
+                                <div class="col-xs-6 col-sm-3">
+                                    Urine
+                                    <br />
+                                </div>
+                                <div style="color:red" class="col-md-1">7.0</div>
+                                <div class="col-xs-6 col-sm-3">2.5</div>
+                                <div class="col-xs-6 col-sm-3">6.0</div>
+                                <div class="col-md-1">mg%</div>
+
+
+                            </div>
+                            <div class="row show-grid">
+                                <div class="col-xs-6 col-sm-3">Blood Sugar</div>
+                                <div class="col-md-1" s>150</div>
+                                <div class="col-xs-6 col-sm-3">120</div>
+                                <div class="col-xs-6 col-sm-3">250</div>
+                                <div class="col-md-1">mg%</div>
+
+
+                            </div>*@
+
+
+                    </div>
+
+
+
+                    <br /><br />
+
+                    <div class="form-group">
+                        <h4 id="grid-example-mixed-complete">Import Template</h4><br />
+                        <div class="col-sm-8">
+                            <select name="selector1" id="" class="drp">  </select>
+                            &nbsp;
+                            <input type="button" id="importtemp" class="btn btn-danger" value="Import" />
+                        </div>
+
+                    </div>
+                    <br /><br />
+                    <div class="form-group">
+                        <h4 id="grid-example-mixed-complete">Doctor's Comments</h4><br />
+                        <div class="col-sm-8"><textarea id="txtarea1" cols="50" rows="4" class="form-control1"></textarea></div>
+
+                    </div>
+
+
+                    <br /><br />
+                    <div id="loadspinner">
+                        <i style="margin-left:50%" class="fa fa-spinner fa-spin fa-2x fa-fw"></i>
+                    </div>
+                    <div id="myDiv" class='alert alert-success fade in' style='text-align:center;
+
+width:60%; height:10%; margin:auto; padding:10px'>
+                        <img src='~/images/rsz_success.png'
+                             style='margin-bottom:2px; margin-right:5px' /> Test Approved Successfully!
+
+                    </div>
+                    <div id="testrejectedsuccess" class='alert alert-success fade in' style='text-align:center;
+
+width:60%; height:10%; margin:auto; padding:10px'>
+                        <img src='~/images/rsz_success.png'
+                             style='margin-bottom:2px; margin-right:5px' /> Test Rejected Successfully!
+
+                    </div>
+                    <br />
+                    <div class="col-sm-2">
+                        <input style="float:left" type="button" id="btnapprove" class="btn btn-danger" value="Approved" />
+                        @*<label class="hvr-shutter-in-horizontal login-sub">
+
+
+                            </label>*@
+                    </div>
+                    <div class="col-sm-2">
+
+                        <input style="float:left" type="button" id="btnreject" class="btn btn-danger" value="Reject" />
+
+                        @*<label class="hvr-shutter-in-horizontal login-sub">
+
+
+                            </label>*@
+                    </div>
+                    <div class="clearfix"> </div>
+                </form>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<br /><br /><br />
+
+<script type="text/javascript">
+
+    $('#loadspinner').hide();
+    $('#myDiv').hide();
+    $('#testrejectedsuccess').hide();
+    window.onload = getTests;
+
+    function getTests() {
+
+        $.ajax({
+            type: 'GET',
+            url: '/Doctor/GetTests/',
+            dataType: "json",
+            success: function (data) {
+
+                $('#patientinfo').append('<h5 id="pno">Patient No. ' + data[0].PatientNumber + '</h5>');
+                $('#patientinfo').append('<h5 id="grid-example-mixed-complete">Patient Name: ' + data[0].PatientName + '</h5>');
+
+                for (var i = 0; i < data[0].PatientTests.length; i++) {
+
+                    $('#tests').append('<div style="margin-top:3px" class="col-xs-6 col-sm-3" id="testname' + i + '">' + data[0].PatientTests[i].testName + '<br /></div>');
+                    $('#tests').append('<div style="margin-top:3px" class="col-md-1" id="result' + i + '">' + data[0].PatientTests[i].result + '</div>');
+                    $('#tests').append('<div style="margin-top:3px" class="col-xs-1 col-sm-3" id="testlowerbound' + i + '">' + data[0].PatientTests[i].lowerBound + '</div>');
+                    $('#tests').append('<div style="margin-top:3px" class="col-xs-1 col-sm-3"  id="testupperbound' + i + '">' + data[0].PatientTests[i].upperBound + '</div>');
+                    $('#tests').append('<div style="margin-top:3px" class="col-md-1"  id="testunit' + i + '">' + data[0].PatientTests[i].unit + '<br /></div>');
+                }
+
+                //For Validating Results
+
+                for (var i = 0; i < data[0].PatientTests.length; i++) {
+                    var lb = $('#testlowerbound' + i).text();
+                    lb = parseInt(lb);
+                    var ub = $('#testupperbound' + i).text();
+                    ub = parseInt(ub);
+                    var res = $('#result' + i).text();
+                    res = parseInt(res);
+
+                    if (res < lb || res > ub) {
+                        $('#result' + i).css('color', 'red');
+                    }
+                    else {
+                        $('#result' + i).css('color', 'black');
+                    }
+                }
+            },
+            error: function (data) {
+                alert('Error');
+            }
+        });
+
+    }
+
+
+    $('#btnapprove').click(function () {
+
+        $('#loadspinner').show();
+
+        var pid = $('#pno').text();
+        var comment = $('#txtarea1').val();
+        //alert(pid);
+
+
+
+        $.ajax({
+
+            type: 'POST',
+            url: '/Doctor/ApprovePatientTest/',
+            traditional: true,
+            data: { patientId: pid, comments: comment },
+            dataType: "json",
+            success: function (data) {
+                //alert('Approved');
+                //Yaha achi chezay krdena :p
+                $('#loadspinner').hide();
+                $('#myDiv').show();
+                $('#myDiv').fadeOut(3000);
+                window.location.href = "/Main/DoctorDashboard"
+
+            },
+
+        });
+
+
+    });
+
+
+    $('#btnreject').click(function () {
+
+        $('#loadspinner').show();
+        var pid = $('#pno').text();
+        var comment = $('#txtarea1').val();
+        //alert(comment);
+
+        $.ajax({
+
+            type: 'POST',
+            url: '/Doctor/RejectPatientTest/',
+            traditional: true,
+            data: { patientId: pid, comments: comment },
+            dataType: "json",
+            success: function (data) {
+                $('#loadspinner').hide();
+                $('#testrejectedsuccess').show();
+                $('#testrejectedsuccess').fadeOut(3000);
+                window.location.href = "/Main/DoctorDashboard"
+
+            },
+
+        });
+
+    });
+
+
+
+</script>
+<!--//grid-->
+<!---->
+<!--//content-->
+<!---->
+<!----->
+<!--//content-->
+@*------------- End Main Content Code-------------*@

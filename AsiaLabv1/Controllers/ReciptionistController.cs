@@ -28,7 +28,7 @@ namespace AsiaLabv1.Controllers
         PatientPaymentService PatientPaymentServices = new PatientPaymentService();
         BranchService BranchServices = new BranchService();
         DoctorPatientsTestService DoctorPatientServices = new DoctorPatientsTestService();
-
+        SMSService SmsServices = new SMSService();
         PaymentService PaymentServices = new PaymentService();
 
         public ActionResult PrintReport()
@@ -214,9 +214,12 @@ namespace AsiaLabv1.Controllers
                         Text = referdoctor.ReferredDoctorName
                     });
                     var branchContact = BranchServices.GetBranchContact(branch.Id);
-                    GeneratePatientRecipt(model, gender, selectedTests, branch, branchContact);
+                    
+                    SmsServices.SendSms(model.PhoneNumber, model.Id);
 
-                    return Json("SuccessFully Added Patient", JsonRequestBehavior.AllowGet);
+                    var pdfDocModel = GeneratePatientRecipt(model, gender, selectedTests, branch, branchContact);
+
+                    return Json(pdfDocModel, JsonRequestBehavior.AllowGet);
                 }
                 return Json("Please assign tests to patients", JsonRequestBehavior.AllowGet);
 
@@ -253,29 +256,37 @@ namespace AsiaLabv1.Controllers
         [HttpGet]
         public ActionResult Recipt(int Id)
         {
-            var patient = PatientServices.GetByPatientId(Id);
-            var gender = GenderServices.GetById(patient.GenderId);
-            var branch = BranchServices.GetById(patient.BranchId);
-            var branchContact = BranchServices.GetBranchContact(patient.BranchId);
-            var refer = ReferDoctorsServices.GetPatientReferById(patient.Id);
-            var SubTestList = PatientTestService.GetSubCategoryByPatientId(patient.Id);
-            var payment = PaymentServices.GetPaymentByPatientId(patient.Id);
-
-            var model = new PatientModel
+            try
             {
-                Id = patient.Id,
-                Name = patient.PatientName,
-                Date = patient.DateTime,
-                Age = patient.Age,
-                Email = patient.Email,
-                Discount = payment.Discount,
-                PaidAmount = payment.PaidAmount,
-                PhoneNumber = patient.PatientNumber
-            };
+                var patient = PatientServices.GetByPatientId(Id);
+                var gender = GenderServices.GetById(patient.GenderId);
+                var branch = BranchServices.GetById(patient.BranchId);
+                var branchContact = BranchServices.GetBranchContact(patient.BranchId);
+                var refer = ReferDoctorsServices.GetPatientReferById(patient.Id);
+                var SubTestList = PatientTestService.GetSubCategoryByPatientId(patient.Id);
+                var payment = PaymentServices.GetPaymentByPatientId(patient.Id);
 
-            GeneratePatientRecipt(model, gender, SubTestList, branch, branchContact);
+                var model = new PatientModel
+                {
+                    Id = patient.Id,
+                    Name = patient.PatientName,
+                    Date = patient.DateTime,
+                    Age = patient.Age,
+                    Email = patient.Email,
+                    Discount = payment.Discount,
+                    PaidAmount = payment.PaidAmount,
+                    PhoneNumber = patient.PatientNumber
+                };
 
-            return Json("Success", JsonRequestBehavior.AllowGet);
+                var pdfDocModel = GeneratePatientRecipt(model, gender, SubTestList, branch, branchContact);
+
+                return Json(pdfDocModel, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex, JsonRequestBehavior.AllowGet);
+            }
+            
         }
 
         [HttpGet]
@@ -304,61 +315,84 @@ namespace AsiaLabv1.Controllers
         [NonAction]
         public void GeneratePatientReport(List<PatientReportModel> model, Refer ReferDoctor, Patient PatientInfo, UserEmployee PatientDoctor, string BranchName)
         {
-            StreamWriter sq = new StreamWriter(Server.MapPath("/images/") + "log.txt");
-            sq.Close();
-            StreamWriter sw = new StreamWriter(Server.MapPath("/images/") + "log.txt");
-            sw.WriteLine("patient report method start....");
+            //StreamWriter sq = new StreamWriter(Server.MapPath("/images/") + "log.txt");
+            //sq.Close();
+            //StreamWriter sw = new StreamWriter(Server.MapPath("/images/") + "log.txt");
+            //sw.WriteLine("patient report method start....");
             string filename = "Report-" + PatientInfo.Id + ".pdf";
             if (!System.IO.File.Exists(Request.MapPath("/PatientsReport/") + filename))
             {
                 
                 var path = Server.MapPath("/images/");
-                sw.WriteLine("condition true of patient report. file doesn't exist..");
-                sw.WriteLine("class going to instantiate report.");
+               // sw.WriteLine("condition true of patient report. file doesn't exist..");
+               // sw.WriteLine("class going to instantiate report.");
                 PatientReport Report = new PatientReport(path, model, ReferDoctor, PatientInfo, PatientDoctor, BranchName);
-                sw.WriteLine("report class instantiated");
+                //sw.WriteLine("report class instantiated");
                 PdfDocument pdf = Report.CreateDocument();
-                sw.WriteLine("report is created.");
+                //sw.WriteLine("report is created.");
 
                 pdf.Save(Server.MapPath("/PatientsReport/") + filename);
-                sw.WriteLine("report saved successfully");
+                //sw.WriteLine("report saved successfully");
                 //    System.IO.FileInfo fi=new System.IO.FileInfo(Request.MapPath("/PatientsReport/") + filename);
                 //    fi.Delete();
             }
             // ...and start a viewer.
-            sw.WriteLine("report process start.");
+            //sw.WriteLine("report process start.");
             Process.Start(Server.MapPath("/PatientsReport/") + filename);
-            sw.WriteLine("report PROCESS END");
-            sw.Close();
+            //sw.WriteLine("report PROCESS END");
+            //sw.Close();
         }
 
         [NonAction]
-        public void GeneratePatientRecipt(PatientModel model, Gender gender, List<TestSubcategory> tests, Branch branch, Contact branchcontact)
+        public PdfDocModel GeneratePatientRecipt(PatientModel model, Gender gender, List<TestSubcategory> tests, Branch branch, Contact branchcontact)
         {
-            StreamWriter sq = new StreamWriter(Server.MapPath("/images/") + "logreceipt.txt");
-            sq.Close();
-            StreamWriter sw = new StreamWriter(Server.MapPath("/images/") + "logreceipt.txt");
-            sw.WriteLine("patient receipt method start....");           
-
-            string filename = "Recipt-" + model.Id + ".pdf";
-            if (!System.IO.File.Exists(Server.MapPath("/PatientsReport/") + filename))
+            //StreamWriter sq = new StreamWriter(Server.MapPath("/images/") + "logreceipt.txt");
+            //sq.Close();
+            //StreamWriter sw = new StreamWriter(Server.MapPath("/images/") + "logreceipt.txt");
+            //sw.WriteLine("patient receipt method start....");           
+            try
             {
-                var path = Server.MapPath("/images/");
-                sw.WriteLine("condition true of patient receipt. file doesn't exist..");
-                sw.WriteLine("class going to instantiate receipt.");
-                PatientRecipt recipt = new PatientRecipt(path, Session["loginusername"].ToString(), gender, model, tests, branch, branchcontact);
-                sw.WriteLine("receipt class instantiated");
-                PdfDocument pdf = recipt.CreateDocument();
-                sw.WriteLine("receipt is created.");
-                pdf.Save(Server.MapPath("/PatientsReport/") + filename);
-                sw.WriteLine("receipt saved successfully");
-                //    System.IO.FileInfo fi=new System.IO.FileInfo(Request.MapPath("/PatientsReport/") + filename);
-                //    fi.Delete();
+                string filename = "Recipt-" + model.Id + ".pdf";
+                
+                var pdfDocModel = new PdfDocModel() { ErrorObject = null, PdfDoc = null };
+
+                if (!System.IO.File.Exists(Server.MapPath("/PatientsReport/") + filename))
+                {
+                    var path = Server.MapPath("/images/");
+                    //sw.WriteLine("condition true of patient receipt. file doesn't exist..");
+                    //sw.WriteLine("class going to instantiate receipt.");
+                    PatientRecipt recipt = new PatientRecipt(path, Session["loginusername"].ToString(), gender, model, tests, branch, branchcontact);
+                    //   sw.WriteLine("receipt class instantiated");
+                    pdfDocModel = recipt.CreateDocument();
+                    if (pdfDocModel.PdfDoc != null)
+                    {
+                        pdfDocModel.PdfDoc.Save(Server.MapPath("/PatientsReport/") + filename);
+                        Process.Start(Server.MapPath("/PatientsReport/") + filename);
+                    }
+                    //    sw.WriteLine("receipt is created.");
+
+
+                    ////////////pdf.Save(Server.MapPath("/PatientsReport/") + filename);
+
+
+                    //  sw.WriteLine("receipt saved successfully");
+                    //    System.IO.FileInfo fi=new System.IO.FileInfo(Request.MapPath("/PatientsReport/") + filename);
+                    //    fi.Delete();
+                }
+                return pdfDocModel;
             }
-            sw.WriteLine("receipt process start.");
-            Process.Start(Server.MapPath("/PatientsReport/") + filename);
-            sw.WriteLine("receipt PROCESS END");
-            sw.Close();
+            catch (Exception ex)
+            {
+                return new PdfDocModel()
+                {
+                    PdfDoc = null,
+                    ErrorObject = ex
+                };
+            }
+            //sw.WriteLine("receipt process start.");
+            ////////////////Process.Start(Server.MapPath("/PatientsReport/") + filename);
+            //sw.WriteLine("receipt PROCESS END");
+            //sw.Close();
 
           
 

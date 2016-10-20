@@ -46,7 +46,7 @@ namespace AsiaLabv1.Models
             this.gender = gender;
         }
 
-        public PdfDocument CreateDocument()
+        public PdfDocModel CreateDocument()
         {
             #region old code
             // Create a new MigraDoc document
@@ -185,57 +185,57 @@ namespace AsiaLabv1.Models
             //Code for SMS
             try
             {
-                // anzulaqueel.com POST URL
-                string url = "http://anzulaqueel.com/json.php?username=AsiaLab&password=asialab100";
-                // XML-formatted data
+                //// anzulaqueel.com POST URL
+                //string url = "http://anzulaqueel.com/json.php?username=AsiaLab&password=asialab100";
+                //// XML-formatted data
 
-                string senderSender = "Asia Lab";
-                string mobileMobile = model.PhoneNumber;
-                string messageMessage = "Thank you for visiting Asia Lab, your Receipt no. is " + model.Id + ". " + "\n" + DateTime.Now.ToShortDateString() + ", " + DateTime.Now.ToShortTimeString();
-
-
-                string fields = "&to=" + mobileMobile +
-                "&from=" + senderSender + "&message=" + messageMessage;
-
-                url = url + fields;
-
-                // web request start
-
-                Uri uri = new Uri(url);
-                string data = "field-keywords=ASP.NET4.0";
-
-                if (uri.Scheme == Uri.UriSchemeHttp)
-                {
-                    // create a request on behalf of uri
-                    HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(uri);
-                    // setting parameter for the request
-                    request.Method = WebRequestMethods.Http.Post;
-                    request.ContentLength = data.Length;
-                    request.ContentType = "application/x-www-form-urlencoded";
-                    // a stream writer for the request
-                    StreamWriter writer = new StreamWriter(request.GetRequestStream());
-                    // write down the date
-                    writer.Write(data);
-                    //close the stream writer
-                    writer.Close();
-                    // GET / POSTting response from the request
-                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                    // GET / POST the stream associated with the response.
-                    Stream receiveStream = response.GetResponseStream();
-                    // Pipes the stream to a higher level stream reader with the required encoding format.
-                    StreamReader readStream = new StreamReader(receiveStream, System.Text.Encoding.UTF8);
+                //string senderSender = "Asia Lab";
+                //string mobileMobile = model.PhoneNumber;
+                //string messageMessage = "Thank you for visiting Asia Lab, your Receipt no. is " + model.Id + ". " + "\n" + DateTime.Now.ToShortDateString() + ", " + DateTime.Now.ToShortTimeString();
 
 
-                    // to write a http response from the characters
+                //string fields = "&to=" + mobileMobile +
+                //"&from=" + senderSender + "&message=" + messageMessage;
 
-                    //Response.Write(readStream.ReadToEnd());
-                    // close the response
+                //url = url + fields;
 
-                    response.Close();
-                    // close the reader
+                //// web request start
 
-                    readStream.Close();
-                }
+                //Uri uri = new Uri(url);
+                //string data = "field-keywords=ASP.NET4.0";
+
+                //if (uri.Scheme == Uri.UriSchemeHttp)
+                //{
+                //    // create a request on behalf of uri
+                //    HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(uri);
+                //    // setting parameter for the request
+                //    request.Method = WebRequestMethods.Http.Post;
+                //    request.ContentLength = data.Length;
+                //    request.ContentType = "application/x-www-form-urlencoded";
+                //    // a stream writer for the request
+                //    StreamWriter writer = new StreamWriter(request.GetRequestStream());
+                //    // write down the date
+                //    writer.Write(data);
+                //    //close the stream writer
+                //    writer.Close();
+                //    // GET / POSTting response from the request
+                //    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                //    // GET / POST the stream associated with the response.
+                //    Stream receiveStream = response.GetResponseStream();
+                //    // Pipes the stream to a higher level stream reader with the required encoding format.
+                //    StreamReader readStream = new StreamReader(receiveStream, System.Text.Encoding.UTF8);
+
+
+                //    // to write a http response from the characters
+
+                //    //Response.Write(readStream.ReadToEnd());
+                //    // close the response
+
+                //    response.Close();
+                //    // close the reader
+
+                //    readStream.Close();
+                //}
 
 
                 PdfDocument pdf = new PdfDocument();
@@ -400,11 +400,19 @@ namespace AsiaLabv1.Models
                 WriteTextOnPdf(graph, font, pdfPage, TotalCharges.ToString(), X2, Y);
 
 
-                return pdf;
+                return new PdfDocModel()
+                {
+                    PdfDoc = pdf,
+                    ErrorObject = null
+                };
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return new PdfDocModel()
+                {
+                    PdfDoc = null,
+                    ErrorObject = ex
+                };
             }
            
 
@@ -455,298 +463,298 @@ namespace AsiaLabv1.Models
             pen.Alignment = System.Drawing.Drawing2D.PenAlignment.Inset;
             graph.DrawRectangle(pen, rect);
         }
+        #region Humam code commented
+        //public void Check()
+        //{
+        //    try
+        //    {
+        //        //Code for Receipt Print
 
-        public void Check()
-        {
-            try
-            {
-                //Code for Receipt Print
+        //        PrintDocument pd = new PrintDocument();
+        //        pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
+        //        // Set the printer name. 
+        //        //pd.PrinterSettings.PrinterName = "\\NS5\hpoffice
+        //        //pd.PrinterSettings.PrinterName = "Zebra New GK420t"      
 
-                PrintDocument pd = new PrintDocument();
-                pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
-                // Set the printer name. 
-                //pd.PrinterSettings.PrinterName = "\\NS5\hpoffice
-                //pd.PrinterSettings.PrinterName = "Zebra New GK420t"      
+        //        pd.Print();
 
-                pd.Print();
+        //        // anzulaqueel.com POST URL
+        //        string url = "http://anzulaqueel.com/json.php?username=AsiaLab&password=asialab100";
+        //        // XML-formatted data
 
-                // anzulaqueel.com POST URL
-                string url = "http://anzulaqueel.com/json.php?username=AsiaLab&password=asialab100";
-                // XML-formatted data
-
-                string senderSender = "Asia Lab";
-                string mobileMobile = model.PhoneNumber;
-                string messageMessage = "Thank you for visiting Asia Lab, your Receipt no. is " + model.Id + ". " + "\n"+DateTime.Now.ToShortDateString() + ", " + DateTime.Now.ToShortTimeString();
-
-
-                string fields = "&to=" + mobileMobile +
-                "&from=" + senderSender + "&message=" + messageMessage;
-
-                url = url + fields;
-
-                // web request start
-
-                Uri uri = new Uri(url);
-                string data = "field-keywords=ASP.NET4.0";
-
-                if (uri.Scheme == Uri.UriSchemeHttp)
-                {
-                    // create a request on behalf of uri
-                    HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(uri);
-                    // setting parameter for the request
-                    request.Method = WebRequestMethods.Http.Post;
-                    request.ContentLength = data.Length;
-                    request.ContentType = "application/x-www-form-urlencoded";
-                    // a stream writer for the request
-                    StreamWriter writer = new StreamWriter(request.GetRequestStream());
-                    // write down the date
-                    writer.Write(data);
-                    //close the stream writer
-                    writer.Close();
-                    // GET / POSTting response from the request
-                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                    // GET / POST the stream associated with the response.
-                    Stream receiveStream = response.GetResponseStream();
-                    // Pipes the stream to a higher level stream reader with the required encoding format.
-                    StreamReader readStream = new StreamReader(receiveStream, System.Text.Encoding.UTF8);
+        //        string senderSender = "Asia Lab";
+        //        string mobileMobile = model.PhoneNumber;
+        //        string messageMessage = "Thank you for visiting Asia Lab, your Receipt no. is " + model.Id + ". " + "\n"+DateTime.Now.ToShortDateString() + ", " + DateTime.Now.ToShortTimeString();
 
 
-                    // to write a http response from the characters
+        //        string fields = "&to=" + mobileMobile +
+        //        "&from=" + senderSender + "&message=" + messageMessage;
 
-                    //Response.Write(readStream.ReadToEnd());
-                    // close the response
+        //        url = url + fields;
 
-                    response.Close();
-                    // close the reader
+        //        // web request start
 
-                    readStream.Close();
+        //        Uri uri = new Uri(url);
+        //        string data = "field-keywords=ASP.NET4.0";
+
+        //        if (uri.Scheme == Uri.UriSchemeHttp)
+        //        {
+        //            // create a request on behalf of uri
+        //            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(uri);
+        //            // setting parameter for the request
+        //            request.Method = WebRequestMethods.Http.Post;
+        //            request.ContentLength = data.Length;
+        //            request.ContentType = "application/x-www-form-urlencoded";
+        //            // a stream writer for the request
+        //            StreamWriter writer = new StreamWriter(request.GetRequestStream());
+        //            // write down the date
+        //            writer.Write(data);
+        //            //close the stream writer
+        //            writer.Close();
+        //            // GET / POSTting response from the request
+        //            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        //            // GET / POST the stream associated with the response.
+        //            Stream receiveStream = response.GetResponseStream();
+        //            // Pipes the stream to a higher level stream reader with the required encoding format.
+        //            StreamReader readStream = new StreamReader(receiveStream, System.Text.Encoding.UTF8);
+
+
+        //            // to write a http response from the characters
+
+        //            //Response.Write(readStream.ReadToEnd());
+        //            // close the response
+
+        //            response.Close();
+        //            // close the reader
+
+        //            readStream.Close();
                     
-                }
+        //        }
 
                
-            }
-            catch (Exception exp)
-            {
-                // catch for unhelded exception              
-            }
+        //    }
+        //    catch (Exception exp)
+        //    {
+        //        // catch for unhelded exception              
+        //    }
 
 
           
         
-        }
+        //}
 
-        void pd_PrintPage(object sender, PrintPageEventArgs ev)
-        {
-            //Font printFont = new Font("3 of 9 Barcode", 17);
-            System.Drawing.Font printFont1 = new System.Drawing.Font("Arial", 12, FontStyle.Bold);
+        //void pd_PrintPage(object sender, PrintPageEventArgs ev)
+        //{
+        //    //Font printFont = new Font("3 of 9 Barcode", 17);
+        //    System.Drawing.Font printFont1 = new System.Drawing.Font("Arial", 12, FontStyle.Bold);
 
-            //Font printFont1 = new Font("Arial, Helvetica, sans-serif", 9, FontStyle.Bold);
+        //    //Font printFont1 = new Font("Arial, Helvetica, sans-serif", 9, FontStyle.Bold);
 
-            SolidBrush br = new SolidBrush(System.Drawing.Color.Black);
-            Pen blpen = new Pen(System.Drawing.Color.Black, 7);
-            Pen blpen2 = new Pen(System.Drawing.Color.Black, 2);
-            Point p1 = new Point(0, 30);
-            Point p2 = new Point(350, 30);
+        //    SolidBrush br = new SolidBrush(System.Drawing.Color.Black);
+        //    Pen blpen = new Pen(System.Drawing.Color.Black, 7);
+        //    Pen blpen2 = new Pen(System.Drawing.Color.Black, 2);
+        //    Point p1 = new Point(0, 30);
+        //    Point p2 = new Point(350, 30);
 
-            Point p3 = new Point(0, 77);
-            Point p4 = new Point(350, 77);
+        //    Point p3 = new Point(0, 77);
+        //    Point p4 = new Point(350, 77);
 
-            Point p5 = new Point(0, 164);
-            Point p6 = new Point(350, 164);
+        //    Point p5 = new Point(0, 164);
+        //    Point p6 = new Point(350, 164);
 
-            Point p7 = new Point(12, 200);
-            Point p8 = new Point(35, 200);
+        //    Point p7 = new Point(12, 200);
+        //    Point p8 = new Point(35, 200);
 
 
 
-            ev.Graphics.DrawString("Asia Lab Diagnostic Centre", printFont1, br, 40, 7);
-            ev.Graphics.DrawLine(blpen, p1, p2);
+        //    ev.Graphics.DrawString("Asia Lab Diagnostic Centre", printFont1, br, 40, 7);
+        //    ev.Graphics.DrawLine(blpen, p1, p2);
 
-            printFont1 = new System.Drawing.Font("Arial", 8, FontStyle.Regular);
-            ev.Graphics.DrawString(Branch.BranchName, printFont1, br, 75, 39);
-            ev.Graphics.DrawString(Branch.BranchAddress, printFont1, br, 15, 51);
-            ev.Graphics.DrawString("Tel: " + BranchContact.BranchContactNo, printFont1, br, 70, 65);
+        //    printFont1 = new System.Drawing.Font("Arial", 8, FontStyle.Regular);
+        //    ev.Graphics.DrawString(Branch.BranchName, printFont1, br, 75, 39);
+        //    ev.Graphics.DrawString(Branch.BranchAddress, printFont1, br, 15, 51);
+        //    ev.Graphics.DrawString("Tel: " + BranchContact.BranchContactNo, printFont1, br, 70, 65);
 
-            ev.Graphics.DrawLine(blpen2, p3, p4);
+        //    ev.Graphics.DrawLine(blpen2, p3, p4);
 
-            //printFont1 = new System.Drawing.Font("Arial", 10, FontStyle.Regular);
-            //ev.Graphics.DrawString("Statement of Asia Laboratory Charges", printFont1, br, 26, 83);
-            printFont1 = new System.Drawing.Font("Arial", 8, FontStyle.Regular);
+        //    //printFont1 = new System.Drawing.Font("Arial", 10, FontStyle.Regular);
+        //    //ev.Graphics.DrawString("Statement of Asia Laboratory Charges", printFont1, br, 26, 83);
+        //    printFont1 = new System.Drawing.Font("Arial", 8, FontStyle.Regular);
 
-            ev.Graphics.DrawString("Receipt no. " + model.Id, printFont1, br, 10, 83);
-            ev.Graphics.DrawString("Name: " + model.Name, printFont1, br, 10, 95);
-            ev.Graphics.DrawString("Gender: " + gender.GenderDescription, printFont1, br, 10, 107);
-            ev.Graphics.DrawString("Phone: " + model.PhoneNumber, printFont1, br, 10, 119);
+        //    ev.Graphics.DrawString("Receipt no. " + model.Id, printFont1, br, 10, 83);
+        //    ev.Graphics.DrawString("Name: " + model.Name, printFont1, br, 10, 95);
+        //    ev.Graphics.DrawString("Gender: " + gender.GenderDescription, printFont1, br, 10, 107);
+        //    ev.Graphics.DrawString("Phone: " + model.PhoneNumber, printFont1, br, 10, 119);
 
-            ev.Graphics.DrawString("e-Reports: www.asialabs.com/LabReports", printFont1, br, 26, 130);
+        //    ev.Graphics.DrawString("e-Reports: www.asialabs.com/LabReports", printFont1, br, 26, 130);
 
-            ev.Graphics.DrawLine(blpen2, p5, p6);
+        //    ev.Graphics.DrawLine(blpen2, p5, p6);
 
-            printFont1 = new System.Drawing.Font("Arial", 9, FontStyle.Regular);
-            ev.Graphics.DrawString("Charges: ", printFont1, br, 10, 170);
+        //    printFont1 = new System.Drawing.Font("Arial", 9, FontStyle.Regular);
+        //    ev.Graphics.DrawString("Charges: ", printFont1, br, 10, 170);
 
-            printFont1 = new System.Drawing.Font("Arial", 8, FontStyle.Regular);
-            ev.Graphics.DrawString("Tests: ", printFont1, br, 10, 185);
-            ev.Graphics.DrawLine(blpen2, p7, p8);
-            ev.Graphics.DrawString("Amount ", printFont1, br, 230, 185);
+        //    printFont1 = new System.Drawing.Font("Arial", 8, FontStyle.Regular);
+        //    ev.Graphics.DrawString("Tests: ", printFont1, br, 10, 185);
+        //    ev.Graphics.DrawLine(blpen2, p7, p8);
+        //    ev.Graphics.DrawString("Amount ", printFont1, br, 230, 185);
 
-            int y = 215;
-            int x1 = 10;
-            int x2 = 230;
-            foreach (var item in PatientTests)
-            {
+        //    int y = 215;
+        //    int x1 = 10;
+        //    int x2 = 230;
+        //    foreach (var item in PatientTests)
+        //    {
 
-                ev.Graphics.DrawString(item.TestSubcategoryName, printFont1, br, x1, y);
-                ev.Graphics.DrawString(item.Rate.ToString(), printFont1, br, x2, y);
-                TotalCharges = TotalCharges + item.Rate;
-                //NetAmount = NetAmount + item.Rate;
-                y += 12;
-            }
+        //        ev.Graphics.DrawString(item.TestSubcategoryName, printFont1, br, x1, y);
+        //        ev.Graphics.DrawString(item.Rate.ToString(), printFont1, br, x2, y);
+        //        TotalCharges = TotalCharges + item.Rate;
+        //        //NetAmount = NetAmount + item.Rate;
+        //        y += 12;
+        //    }
 
-            y += 20;
-            printFont1 = new System.Drawing.Font("Arial", 9, FontStyle.Regular);
-            ev.Graphics.DrawString("Total Charges ", printFont1, br, 10, y);
-            ev.Graphics.DrawString(TotalCharges.ToString(), printFont1, br, 230, y);
-            y += 20;
-            Point p9 = new Point(0, y);
-            Point p10 = new Point(350, y);
-            ev.Graphics.DrawLine(blpen2, p9, p10);
+        //    y += 20;
+        //    printFont1 = new System.Drawing.Font("Arial", 9, FontStyle.Regular);
+        //    ev.Graphics.DrawString("Total Charges ", printFont1, br, 10, y);
+        //    ev.Graphics.DrawString(TotalCharges.ToString(), printFont1, br, 230, y);
+        //    y += 20;
+        //    Point p9 = new Point(0, y);
+        //    Point p10 = new Point(350, y);
+        //    ev.Graphics.DrawLine(blpen2, p9, p10);
 
-            y += 15;
-            printFont1 = new System.Drawing.Font("Arial", 10, FontStyle.Regular);
-            ev.Graphics.DrawString("Payment Receivables: ", printFont1, br, 10, y);
+        //    y += 15;
+        //    printFont1 = new System.Drawing.Font("Arial", 10, FontStyle.Regular);
+        //    ev.Graphics.DrawString("Payment Receivables: ", printFont1, br, 10, y);
 
-            //y += 16;
-            printFont1 = new System.Drawing.Font("Arial", 9, FontStyle.Regular);
-            //ev.Graphics.DrawString("Discount: ", printFont1, br, 10, y);
-            //ev.Graphics.DrawString(model.Discount.ToString(), printFont1, br, 230, y);
-            y += 13;
-            ev.Graphics.DrawString("Net Amount: ", printFont1, br, 10, y);
-            ev.Graphics.DrawString((TotalCharges2 - model.Discount).ToString(), printFont1, br, 230, y);
-            y += 13;
-            ev.Graphics.DrawString("Paid Amount: ", printFont1, br, 10, y);
-            ev.Graphics.DrawString(model.PaidAmount.ToString(), printFont1, br, 230, y);
+        //    //y += 16;
+        //    printFont1 = new System.Drawing.Font("Arial", 9, FontStyle.Regular);
+        //    //ev.Graphics.DrawString("Discount: ", printFont1, br, 10, y);
+        //    //ev.Graphics.DrawString(model.Discount.ToString(), printFont1, br, 230, y);
+        //    y += 13;
+        //    ev.Graphics.DrawString("Net Amount: ", printFont1, br, 10, y);
+        //    ev.Graphics.DrawString((TotalCharges2 - model.Discount).ToString(), printFont1, br, 230, y);
+        //    y += 13;
+        //    ev.Graphics.DrawString("Paid Amount: ", printFont1, br, 10, y);
+        //    ev.Graphics.DrawString(model.PaidAmount.ToString(), printFont1, br, 230, y);
 
-            y += 15;
+        //    y += 15;
 
-            Point p11 = new Point(0, y);
-            Point p12 = new Point(350, y);
-            ev.Graphics.DrawLine(blpen2, p11, p12);
+        //    Point p11 = new Point(0, y);
+        //    Point p12 = new Point(350, y);
+        //    ev.Graphics.DrawLine(blpen2, p11, p12);
 
-            y += 12;
+        //    y += 12;
 
-            printFont1 = new System.Drawing.Font("Arial", 10, FontStyle.Regular);
-            ev.Graphics.DrawString("Reporting Schedule", printFont1, br, 10, y);
+        //    printFont1 = new System.Drawing.Font("Arial", 10, FontStyle.Regular);
+        //    ev.Graphics.DrawString("Reporting Schedule", printFont1, br, 10, y);
 
-            y += 15;
-            printFont1 = new System.Drawing.Font("Arial", 8, FontStyle.Regular);
-            ev.Graphics.DrawString("Reporting Date", printFont1, br, 10, y);
-            ev.Graphics.DrawString("Description", printFont1, br, 180, y);
-            y += 15;
-            var ReportingDate = DateTime.Now.AddDays(1);
-            foreach (var item in PatientTests)
-            {
-                ev.Graphics.DrawString(ReportingDate.ToShortDateString() + "" + ReportingDate.ToShortTimeString(), printFont1, br, 10, y);
-                ev.Graphics.DrawString(item.TestSubcategoryName, printFont1, br, 180, y);
-                y += 10;
-            }
-            y += 20;
+        //    y += 15;
+        //    printFont1 = new System.Drawing.Font("Arial", 8, FontStyle.Regular);
+        //    ev.Graphics.DrawString("Reporting Date", printFont1, br, 10, y);
+        //    ev.Graphics.DrawString("Description", printFont1, br, 180, y);
+        //    y += 15;
+        //    var ReportingDate = DateTime.Now.AddDays(1);
+        //    foreach (var item in PatientTests)
+        //    {
+        //        ev.Graphics.DrawString(ReportingDate.ToShortDateString() + "" + ReportingDate.ToShortTimeString(), printFont1, br, 10, y);
+        //        ev.Graphics.DrawString(item.TestSubcategoryName, printFont1, br, 180, y);
+        //        y += 10;
+        //    }
+        //    y += 20;
 
-            Point p13 = new Point(0, y);
-            Point p14 = new Point(350, y);
-            ev.Graphics.DrawLine(blpen2, p13, p14);
+        //    Point p13 = new Point(0, y);
+        //    Point p14 = new Point(350, y);
+        //    ev.Graphics.DrawLine(blpen2, p13, p14);
 
-            y += 15;
+        //    y += 15;
 
-            printFont1 = new System.Drawing.Font("Arial", 7, FontStyle.Regular);
-            ev.Graphics.DrawString("Please collect your reports at 8:30PM on reporting day or", printFont1, br, 10, y);
-            y += 12;
-            ev.Graphics.DrawString("any day during working hours after the report date.", printFont1, br, 10, y);
+        //    printFont1 = new System.Drawing.Font("Arial", 7, FontStyle.Regular);
+        //    ev.Graphics.DrawString("Please collect your reports at 8:30PM on reporting day or", printFont1, br, 10, y);
+        //    y += 12;
+        //    ev.Graphics.DrawString("any day during working hours after the report date.", printFont1, br, 10, y);
 
-            y += 12;
-            ev.Graphics.DrawString("Please bring the original recipt to collect the report", printFont1, br, 10, y);
+        //    y += 12;
+        //    ev.Graphics.DrawString("Please bring the original recipt to collect the report", printFont1, br, 10, y);
 
-            y += 12;
-            ev.Graphics.DrawString("and or for refund required. Asia lab will not be responsible", printFont1, br, 10, y);
+        //    y += 12;
+        //    ev.Graphics.DrawString("and or for refund required. Asia lab will not be responsible", printFont1, br, 10, y);
            
-            y += 12;
-            ev.Graphics.DrawString("for report not collected within one month after the", printFont1, br, 10, y);
+        //    y += 12;
+        //    ev.Graphics.DrawString("for report not collected within one month after the", printFont1, br, 10, y);
             
-            y += 12;
-            ev.Graphics.DrawString("reporting date.", printFont1, br, 10, y);
+        //    y += 12;
+        //    ev.Graphics.DrawString("reporting date.", printFont1, br, 10, y);
             
-            y += 20;
-            ev.Graphics.DrawString("Working Hours", printFont1, br, 10, y);
-            ev.Graphics.DrawString("Mon to Sat  8:00 AM to 12:00 AM (Midnight)", printFont1, br, 130, y);
+        //    y += 20;
+        //    ev.Graphics.DrawString("Working Hours", printFont1, br, 10, y);
+        //    ev.Graphics.DrawString("Mon to Sat  8:00 AM to 12:00 AM (Midnight)", printFont1, br, 130, y);
                        
-            y += 12;
-            Point p15 = new Point(0, y);
-            Point p16 = new Point(350, y);
-            ev.Graphics.DrawLine(blpen2, p15, p16);
+        //    y += 12;
+        //    Point p15 = new Point(0, y);
+        //    Point p16 = new Point(350, y);
+        //    ev.Graphics.DrawLine(blpen2, p15, p16);
            
-            y += 10;
-            ev.Graphics.DrawString("Printed On:", printFont1, br, 10, y);
-            ev.Graphics.DrawString(DateTime.Now.ToShortDateString() + "" + DateTime.Now.ToShortTimeString(), printFont1, br, 180, y);
+        //    y += 10;
+        //    ev.Graphics.DrawString("Printed On:", printFont1, br, 10, y);
+        //    ev.Graphics.DrawString(DateTime.Now.ToShortDateString() + "" + DateTime.Now.ToShortTimeString(), printFont1, br, 180, y);
             
-            y += 12;
-            ev.Graphics.DrawString("Printed By:", printFont1, br, 10, y);
-            ev.Graphics.DrawString(LogedInUser, printFont1, br, 180, y);
+        //    y += 12;
+        //    ev.Graphics.DrawString("Printed By:", printFont1, br, 10, y);
+        //    ev.Graphics.DrawString(LogedInUser, printFont1, br, 180, y);
 
 
-            y += 70;
-            //Extra Slip Code
+        //    y += 70;
+        //    //Extra Slip Code
 
            
 
             
-            ev.Graphics.DrawString("Receipt no. " + model.Id, printFont1, br, 10, y);
-            y += 12;
-            ev.Graphics.DrawString("Name: " + model.Name, printFont1, br, 10, y);
-            y += 12;
-            ev.Graphics.DrawString("Gender: " + gender.GenderDescription, printFont1, br, 10, y);
-            y += 12;
-            ev.Graphics.DrawString("Phone: " + model.PhoneNumber, printFont1, br, 10, y);
+        //    ev.Graphics.DrawString("Receipt no. " + model.Id, printFont1, br, 10, y);
+        //    y += 12;
+        //    ev.Graphics.DrawString("Name: " + model.Name, printFont1, br, 10, y);
+        //    y += 12;
+        //    ev.Graphics.DrawString("Gender: " + gender.GenderDescription, printFont1, br, 10, y);
+        //    y += 12;
+        //    ev.Graphics.DrawString("Phone: " + model.PhoneNumber, printFont1, br, 10, y);
 
-            y += 15;
-            ev.Graphics.DrawString("e-Reports: www.asialabs.com/LabReports", printFont1, br, 26, y);
+        //    y += 15;
+        //    ev.Graphics.DrawString("e-Reports: www.asialabs.com/LabReports", printFont1, br, 26, y);
 
-            y += 12;
-            Point pa = new Point(0, y);
-            Point pb = new Point(350, y);
-            ev.Graphics.DrawLine(blpen2, pa, pb);
+        //    y += 12;
+        //    Point pa = new Point(0, y);
+        //    Point pb = new Point(350, y);
+        //    ev.Graphics.DrawLine(blpen2, pa, pb);
 
-            y += 10;
-            printFont1 = new System.Drawing.Font("Arial", 9, FontStyle.Regular);
-            ev.Graphics.DrawString("Charges: ", printFont1, br, 10, y);
+        //    y += 10;
+        //    printFont1 = new System.Drawing.Font("Arial", 9, FontStyle.Regular);
+        //    ev.Graphics.DrawString("Charges: ", printFont1, br, 10, y);
 
-            y += 12;
-            printFont1 = new System.Drawing.Font("Arial", 8, FontStyle.Regular);
+        //    y += 12;
+        //    printFont1 = new System.Drawing.Font("Arial", 8, FontStyle.Regular);
            
-            ev.Graphics.DrawString("Tests: ", printFont1, br, 10, y);
-            ev.Graphics.DrawLine(blpen2, p7, p8);
-            ev.Graphics.DrawString("Amount ", printFont1, br, 230, y);
+        //    ev.Graphics.DrawString("Tests: ", printFont1, br, 10, y);
+        //    ev.Graphics.DrawLine(blpen2, p7, p8);
+        //    ev.Graphics.DrawString("Amount ", printFont1, br, 230, y);
 
-            y += 15;
-            foreach (var item in PatientTests)
-            {
+        //    y += 15;
+        //    foreach (var item in PatientTests)
+        //    {
 
-                ev.Graphics.DrawString(item.TestSubcategoryName, printFont1, br, x1, y);
-                ev.Graphics.DrawString(item.Rate.ToString(), printFont1, br, x2, y);
-                TotalCharges = TotalCharges + item.Rate;
-                //NetAmount = NetAmount + item.Rate;
-                y += 12;
-            }
+        //        ev.Graphics.DrawString(item.TestSubcategoryName, printFont1, br, x1, y);
+        //        ev.Graphics.DrawString(item.Rate.ToString(), printFont1, br, x2, y);
+        //        TotalCharges = TotalCharges + item.Rate;
+        //        //NetAmount = NetAmount + item.Rate;
+        //        y += 12;
+        //    }
 
-            y += 20;
-            printFont1 = new System.Drawing.Font("Arial", 9, FontStyle.Regular);
+        //    y += 20;
+        //    printFont1 = new System.Drawing.Font("Arial", 9, FontStyle.Regular);
            
-            ev.Graphics.DrawString("Total Charges ", printFont1, br, 10, y);
+        //    ev.Graphics.DrawString("Total Charges ", printFont1, br, 10, y);
             
-            ev.Graphics.DrawString(TotalCharges.ToString(), printFont1, br, 230, y);
-           
+        //    ev.Graphics.DrawString(TotalCharges.ToString(), printFont1, br, 230, y);
 
-        }
 
+        //}
+        #endregion
         #region old code
         ///// <summary>
         ///// Defines the styles used to format the MigraDoc document.

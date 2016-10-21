@@ -379,6 +379,10 @@ namespace AsiaLabv1.Controllers
                     //    System.IO.FileInfo fi=new System.IO.FileInfo(Request.MapPath("/PatientsReport/") + filename);
                     //    fi.Delete();
                 }
+                else
+                {
+                    Process.Start(Server.MapPath("/PatientsReport/") + filename);
+                }
                 return pdfDocModel;
             }
             catch (Exception ex)

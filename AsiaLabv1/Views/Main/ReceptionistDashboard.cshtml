@@ -104,7 +104,7 @@
             $.ajax({
                 type: 'GET',
                 url: "@Url.Action("Recipt", "Reciptionist")",
-                data: {PatientId: id},
+                data: {Id: id},
                 contentType: "application/json",
                 dataType: 'json',
                 success: function (data) {

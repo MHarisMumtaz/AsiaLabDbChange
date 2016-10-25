@@ -172,13 +172,48 @@ width:60%; height:20%; margin:auto; padding:10px'>
 
                                             </div>
                                             <div class="form-group">
-                                                @Html.LabelFor(model => model.commission, new { @for = "focusedinput", @class = "col-sm-2 control-label" })
-                                                <div class="col-sm-8">
-                                                    @Html.TextBoxFor(model => model.commission, new { @class = "form-control1", id = "doccommision", @placeholder = "Enter Commission in %", required = "required", @maxlength = "5", onkeypress = "return isNumberKey(event)" })
+                                                @Html.LabelFor(model => model.DeptId, new { @for = "focusedinput", @class = "col-md-2 control-label" })
+                                                <div class="col-sm-3">
+                                                    @Html.DropDownListFor(model => model.DeptId, Model.Departments)
                                                     <label class="label" id="com" style="color:red"></label>
                                                 </div>
-
+                                                @Html.LabelFor(model => model.commission, new { @for = "focusedinput", @class = "col-sm-2 control-label" })
+                                                <div class="col-sm-4">
+                                                    @Html.TextBoxFor(model => model.commission, new { @class = "form-control1", id = "commision", @placeholder = "Enter Commission in %", required = "required", @maxlength = "5", onkeypress = "return isNumberKey(event)" })
+                                                    <label class="label" id="com" style="color:red"></label>
+                                                </div>
+                                               
+                                                    <div class="col-sm-2" style="margin-left:26%">
+                                                        <button id="addcommision" type="button" class="btn btn-danger" onclick="addCommision()">
+                                                            Add
+                                                        </button>
+                                                    </div>
+                                               
                                             </div>
+    <div class="horz-grid2">
+        <div class="grid-hor">
+            <h4 id="grid-example-mixed-complete">Commision</h4>
+
+        </div>
+        <!----> <div style="width:1400px" class="row show-grid">
+            <div class="col-md-1" style="text-align:center">Department</div>
+            <div class="col-xs-6 col-sm-4" style="text-align:center">Commision</div>
+        </div>
+        <div style="border: 2px; border-style: solid; width:80%;  color: #d95459; ">
+        </div>
+
+        <div id="SelectedDepart">
+
+        </div>
+    </div>
+    @*<div class="form-group">
+        @Html.LabelFor(model => model.DeptId, new { @for = "focusedinput", @class = "col-sm-2 control-label" })
+        <div class="col-sm-8">
+            @Html.DropDownListFor(model => model.DeptId,Model.Departments)
+            <label class="label" id="com" style="color:red"></label>
+        </div>
+
+    </div>*@
 
                                             <div class="form-group">
                                                 <label class="col-sm-2 control-label"></label>
@@ -191,7 +226,7 @@ width:60%; height:20%; margin:auto; padding:10px'>
                                             <div class="form-group">
                                                 <div class="col-sm-8" style="margin-left:26%">
                                                     <button id="addTestbtn" type="button" class="btn btn-danger">
-                                                        Add
+                                                       Save
                                                     </button>
                                                 </div>
                                             </div>
@@ -215,11 +250,57 @@ width:60%; height:20%; margin:auto; padding:10px'>
 
     $('#ErrorShow').hide();
     $('#myDiv').hide();
-
+    var doctorCommisions = [];
     $('#loadspinner').hide();
+    function addCommision() {
+        var docCommision = {
+            DeptId: $("#DeptId").val(),
+            Commision: $("#commision").val()
+        };
+        $('#SelectedDepart').empty();
+        var isCommisionExist = false;
+        for (var i = 0; i < doctorCommisions.length; i++) {
+            if (doctorCommisions[i].DeptId == docCommision.DeptId) {
+                doctorCommisions[i].Commision = docCommision.Commision;
+                isCommisionExist = true;
+            }
+            $('#SelectedDepart').append("<div style='width:1400px' class='row show-grid'> <div class='col-md-1'>" + doctorCommisions[i].DeptId + "</div> <div class='col-xs-6 col-sm-4'>" + doctorCommisions[i].Commision + "</div></div>");
+        }
+        if (!isCommisionExist) {
+            doctorCommisions.push(docCommision);
+            $('#SelectedDepart').append("<div style='width:1400px' class='row show-grid'> <div class='col-md-1'>" + docCommision.DeptId + "</div> <div class='col-xs-6 col-sm-4'>" + docCommision.Commision + "</div></div>");
+        }
+        
+        //var deptId = $("#DeptId").val();
+        //var commision = $("#commision").val();
+        //$('#SelectedDepart').append("<div style='width:1400px' class='row show-grid'> <div class='col-md-1'>" + deptId + "</div> <div class='col-xs-6 col-sm-4'>" + commision + "</div></div>");
+    }
 
+    function saveReferDoctor() {
+        var model = {
+            ReferredDoctorName:  $("#docname").val(),
+            ReferredDocAddress:  $("#docaddress").val(),
+            ReferredDocNumber:  $("#docnumb").val(),
+            Remarks:  $("#docremarks").val(),
+            DocDeptsCommision: doctorCommisions
+        };
+        $.ajax({
+            type: 'POST',
+            url: "@Url.Action("AddReferDoctor", "Admin")",
+            data: JSON.stringify(model),
+            contentType: "application/json",
+        dataType: "json",
+        success: function (data) {
+          
+        }, error: function (err) {
+
+        }
+
+    });
+    }
     $(document).ready(function () {
-
+        
+       
         $('#addTestbtn').click(function () {
             $('#loadspinner').show();
 
@@ -237,8 +318,9 @@ width:60%; height:20%; margin:auto; padding:10px'>
                 $('#loadspinner').hide();
             }
             else {
-                $('#DoctorSubmitForm').submit();
-                $('#loadspinner').show();
+                saveReferDoctor();
+             //// $('#DoctorSubmitForm').submit();
+               ////// $('#loadspinner').show();
                 //$('#myDiv').show();
                 //$('#myDiv').fadeOut(4000);
 

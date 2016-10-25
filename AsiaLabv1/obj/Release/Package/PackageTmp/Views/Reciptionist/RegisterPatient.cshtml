@@ -239,7 +239,7 @@
                             }
                             if (PaidAmount != "" && Name != "" && GenderId != "" && DateOfBirth != "" && PhoneNumber != "" && Email != "" && SelectedPatientTests.length > 0) {
 
-                                var patientObj = {
+                                var model = {
                                     Id: 0,
                                     Name: $('#Name').val(),
                                     GenderId: parseInt($('#GenderId').val()),
@@ -257,7 +257,7 @@
                                 $.ajax({
                                     type: 'POST',
                                     url: "@Url.Action("AddPatient","Reciptionist")",
-                                    data: JSON.stringify(patientObj),
+                                    data: JSON.stringify(model),
                                     contentType: "application/json",
                                     dataType: 'json',
                                     success: function (data) {

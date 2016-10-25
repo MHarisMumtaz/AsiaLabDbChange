@@ -29,6 +29,10 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PublishDatabaseSettings>
+      <Objects>
+      </Objects>
+    </PublishDatabaseSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -140,32 +144,32 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Address.cs">
-      <DependentUpon>AsiaLabDb.tt</DependentUpon>
+      <DependentUpon>AsiaLabDb3.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="AsiaLabDb.Context.cs">
+    <Compile Include="AsiaLabDb3.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>AsiaLabDb.Context.tt</DependentUpon>
+      <DependentUpon>AsiaLabDb3.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="AsiaLabDb.cs">
+    <Compile Include="AsiaLabDb3.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>AsiaLabDb.tt</DependentUpon>
+      <DependentUpon>AsiaLabDb3.tt</DependentUpon>
     </Compile>
-    <Compile Include="AsiaLabDb.Designer.cs">
+    <Compile Include="AsiaLabDb3.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>AsiaLabDb.edmx</DependentUpon>
+      <DependentUpon>AsiaLabDb3.edmx</DependentUpon>
     </Compile>
     <Compile Include="Branch.cs">
-      <DependentUpon>AsiaLabDb.tt</DependentUpon>
+      <DependentUpon>AsiaLabDb3.tt</DependentUpon>
     </Compile>
     <Compile Include="Contact.cs">
-      <DependentUpon>AsiaLabDb.tt</DependentUpon>
+      <DependentUpon>AsiaLabDb3.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
@@ -173,13 +177,13 @@
     <Compile Include="Controllers\ReciptionistController.cs" />
     <Compile Include="Controllers\TechnicianController.cs" />
     <Compile Include="DoctorComment.cs">
-      <DependentUpon>AsiaLabDb.tt</DependentUpon>
+      <DependentUpon>AsiaLabDb3.tt</DependentUpon>
     </Compile>
     <Compile Include="DoctorPatientsTest.cs">
-      <DependentUpon>AsiaLabDb.tt</DependentUpon>
+      <DependentUpon>AsiaLabDb3.tt</DependentUpon>
     </Compile>
     <Compile Include="Gender.cs">
-      <DependentUpon>AsiaLabDb.tt</DependentUpon>
+      <DependentUpon>AsiaLabDb3.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -194,6 +198,7 @@
     <Compile Include="Models\PatientReport.cs" />
     <Compile Include="Models\PatientReportModel.cs" />
     <Compile Include="Models\PatientSearchModel.cs" />
+    <Compile Include="Models\PdfDocModel.cs" />
     <Compile Include="Models\ReferredModel.cs" />
     <Compile Include="Models\TechnicianPatientsTestModel.cs" />
     <Compile Include="Models\TestManagementModel.cs" />
@@ -201,26 +206,29 @@
     <Compile Include="Models\TestSubCategoryModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Patient.cs">
-      <DependentUpon>AsiaLabDb.tt</DependentUpon>
+      <DependentUpon>AsiaLabDb3.tt</DependentUpon>
     </Compile>
     <Compile Include="PatientRefer.cs">
-      <DependentUpon>AsiaLabDb.tt</DependentUpon>
+      <DependentUpon>AsiaLabDb3.tt</DependentUpon>
     </Compile>
     <Compile Include="PatientTest.cs">
-      <DependentUpon>AsiaLabDb.tt</DependentUpon>
+      <DependentUpon>AsiaLabDb3.tt</DependentUpon>
     </Compile>
     <Compile Include="PatientTestResult.cs">
-      <DependentUpon>AsiaLabDb.tt</DependentUpon>
+      <DependentUpon>AsiaLabDb3.tt</DependentUpon>
     </Compile>
     <Compile Include="Payment.cs">
-      <DependentUpon>AsiaLabDb.tt</DependentUpon>
+      <DependentUpon>AsiaLabDb3.tt</DependentUpon>
     </Compile>
     <Compile Include="PayType.cs">
-      <DependentUpon>AsiaLabDb.tt</DependentUpon>
+      <DependentUpon>AsiaLabDb3.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Refer.cs">
-      <DependentUpon>AsiaLabDb.tt</DependentUpon>
+      <DependentUpon>AsiaLabDb3.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReferDoctorCommision.cs">
+      <DependentUpon>AsiaLabDb3.tt</DependentUpon>
     </Compile>
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\StaticDbContext.cs" />
@@ -232,31 +240,33 @@
     <Compile Include="Services\PatientService.cs" />
     <Compile Include="Services\PatientTestService.cs" />
     <Compile Include="Services\PaymentService.cs" />
+    <Compile Include="Services\ReferDoctorCommisionService.cs" />
     <Compile Include="Services\ReferDoctorsService.cs" />
+    <Compile Include="Services\SMSService.cs" />
     <Compile Include="Services\TestSubCategoryService.cs" />
     <Compile Include="Services\TestCategoryService.cs" />
     <Compile Include="Services\TestDeptService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="TechnicianPatientsTest.cs">
-      <DependentUpon>AsiaLabDb.tt</DependentUpon>
+      <DependentUpon>AsiaLabDb3.tt</DependentUpon>
     </Compile>
     <Compile Include="Template.cs">
-      <DependentUpon>AsiaLabDb.tt</DependentUpon>
+      <DependentUpon>AsiaLabDb3.tt</DependentUpon>
     </Compile>
     <Compile Include="TestCategory.cs">
-      <DependentUpon>AsiaLabDb.tt</DependentUpon>
+      <DependentUpon>AsiaLabDb3.tt</DependentUpon>
     </Compile>
     <Compile Include="TestDepartment.cs">
-      <DependentUpon>AsiaLabDb.tt</DependentUpon>
+      <DependentUpon>AsiaLabDb3.tt</DependentUpon>
     </Compile>
     <Compile Include="TestSubcategory.cs">
-      <DependentUpon>AsiaLabDb.tt</DependentUpon>
+      <DependentUpon>AsiaLabDb3.tt</DependentUpon>
     </Compile>
     <Compile Include="UserEmployee.cs">
-      <DependentUpon>AsiaLabDb.tt</DependentUpon>
+      <DependentUpon>AsiaLabDb3.tt</DependentUpon>
     </Compile>
     <Compile Include="UserType.cs">
-      <DependentUpon>AsiaLabDb.tt</DependentUpon>
+      <DependentUpon>AsiaLabDb3.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -971,28 +981,28 @@
     <Content Include="css\kendo\kendo.silver.mobile.min.css.map" />
     <Content Include="css\kendo\kendo.uniform.min.css.map" />
     <Content Include="css\kendo\kendo.uniform.mobile.min.css.map" />
-    <EntityDeploy Include="AsiaLabDb.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>AsiaLabDb.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="AsiaLabDb.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>AsiaLabDb.edmx</DependentUpon>
-      <LastGenOutput>AsiaLabDb.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="AsiaLabDb.edmx.diagram">
-      <DependentUpon>AsiaLabDb.edmx</DependentUpon>
-    </Content>
-    <Content Include="AsiaLabDb.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>AsiaLabDb.edmx</DependentUpon>
-      <LastGenOutput>AsiaLabDb.cs</LastGenOutput>
-    </Content>
     <Content Include="assets\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="assets\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="assets\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="assets\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="987662.pdf" />
+    <EntityDeploy Include="AsiaLabDb3.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AsiaLabDb3.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="AsiaLabDb3.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AsiaLabDb3.edmx</DependentUpon>
+      <LastGenOutput>AsiaLabDb3.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="AsiaLabDb3.edmx.diagram">
+      <DependentUpon>AsiaLabDb3.edmx</DependentUpon>
+    </Content>
+    <Content Include="AsiaLabDb3.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AsiaLabDb3.edmx</DependentUpon>
+      <LastGenOutput>AsiaLabDb3.cs</LastGenOutput>
+    </Content>
     <None Include="Properties\PublishProfiles\asia-lab - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\asia-lab - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\asialab - FTP.pubxml" />
@@ -1000,6 +1010,8 @@
     <None Include="Properties\PublishProfiles\AsiaLab.pubxml" />
     <None Include="Properties\PublishProfiles\asialabdc - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\asialabdc - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\asiaLabs - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\asiaLabs - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\MyProfile.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="images\404.png" />

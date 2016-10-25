@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="AsiaLabDbModelStoreContainer" CdmEntityContainer="AsiaLabDbEntities">
+  <EntityContainerMapping StorageEntityContainer="AsiaLabDbModel1StoreContainer" CdmEntityContainer="AsiaLabDbEntities1">
     <EntitySetMapping Name="Addresses">
-      <EntityTypeMapping TypeName="AsiaLabDbModel.Address">
+      <EntityTypeMapping TypeName="AsiaLabDbModel1.Address">
         <MappingFragment StoreEntitySet="Address">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="UserEmployeeId" ColumnName="UserEmployeeId" />
@@ -17,7 +17,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Branches">
-      <EntityTypeMapping TypeName="AsiaLabDbModel.Branch">
+      <EntityTypeMapping TypeName="AsiaLabDbModel1.Branch">
         <MappingFragment StoreEntitySet="Branches">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="BranchName" ColumnName="BranchName" />
@@ -27,7 +27,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Contacts">
-      <EntityTypeMapping TypeName="AsiaLabDbModel.Contact">
+      <EntityTypeMapping TypeName="AsiaLabDbModel1.Contact">
         <MappingFragment StoreEntitySet="Contact">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="BranchId" ColumnName="BranchId" />
@@ -36,7 +36,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DoctorComments">
-      <EntityTypeMapping TypeName="AsiaLabDbModel.DoctorComment">
+      <EntityTypeMapping TypeName="AsiaLabDbModel1.DoctorComment">
         <MappingFragment StoreEntitySet="DoctorComments">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="PatientId" ColumnName="PatientId" />
@@ -46,7 +46,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="DoctorPatientsTests">
-      <EntityTypeMapping TypeName="AsiaLabDbModel.DoctorPatientsTest">
+      <EntityTypeMapping TypeName="AsiaLabDbModel1.DoctorPatientsTest">
         <MappingFragment StoreEntitySet="DoctorPatientsTest">
           <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
           <ScalarProperty Name="PatientId" ColumnName="PatientId" />
@@ -56,7 +56,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Genders">
-      <EntityTypeMapping TypeName="AsiaLabDbModel.Gender">
+      <EntityTypeMapping TypeName="AsiaLabDbModel1.Gender">
         <MappingFragment StoreEntitySet="Gender">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="GenderDescription" ColumnName="GenderDescription" />
@@ -64,7 +64,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Patients">
-      <EntityTypeMapping TypeName="AsiaLabDbModel.Patient">
+      <EntityTypeMapping TypeName="AsiaLabDbModel1.Patient">
         <MappingFragment StoreEntitySet="Patient">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="PatientName" ColumnName="PatientName" />
@@ -80,7 +80,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="PatientRefers">
-      <EntityTypeMapping TypeName="AsiaLabDbModel.PatientRefer">
+      <EntityTypeMapping TypeName="AsiaLabDbModel1.PatientRefer">
         <MappingFragment StoreEntitySet="PatientRefer">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="ReferId" ColumnName="ReferId" />
@@ -89,7 +89,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="PatientTestResults">
-      <EntityTypeMapping TypeName="AsiaLabDbModel.PatientTestResult">
+      <EntityTypeMapping TypeName="AsiaLabDbModel1.PatientTestResult">
         <MappingFragment StoreEntitySet="PatientTestResults">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="PatientTestId" ColumnName="PatientTestId" />
@@ -100,7 +100,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="PatientTests">
-      <EntityTypeMapping TypeName="AsiaLabDbModel.PatientTest">
+      <EntityTypeMapping TypeName="AsiaLabDbModel1.PatientTest">
         <MappingFragment StoreEntitySet="PatientTests">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="TestSubcategoryId" ColumnName="TestSubcategoryId" />
@@ -109,7 +109,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Payments">
-      <EntityTypeMapping TypeName="AsiaLabDbModel.Payment">
+      <EntityTypeMapping TypeName="AsiaLabDbModel1.Payment">
         <MappingFragment StoreEntitySet="Payment">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="PatientId" ColumnName="PatientId" />
@@ -123,15 +123,24 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="PayTypes">
-      <EntityTypeMapping TypeName="AsiaLabDbModel.PayType">
+      <EntityTypeMapping TypeName="AsiaLabDbModel1.PayType">
         <MappingFragment StoreEntitySet="PayType">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ReferDoctorCommisions">
+      <EntityTypeMapping TypeName="AsiaLabDbModel1.ReferDoctorCommision">
+        <MappingFragment StoreEntitySet="ReferDoctorCommisions">
+          <ScalarProperty Name="ReferDoctorId" ColumnName="ReferDoctorId" />
+          <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+          <ScalarProperty Name="Commision" ColumnName="Commision" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Refers">
-      <EntityTypeMapping TypeName="AsiaLabDbModel.Refer">
+      <EntityTypeMapping TypeName="AsiaLabDbModel1.Refer">
         <MappingFragment StoreEntitySet="Refers">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="ReferredDoctorName" ColumnName="ReferredDoctorName" />
@@ -143,7 +152,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="TechnicianPatientsTests">
-      <EntityTypeMapping TypeName="AsiaLabDbModel.TechnicianPatientsTest">
+      <EntityTypeMapping TypeName="AsiaLabDbModel1.TechnicianPatientsTest">
         <MappingFragment StoreEntitySet="TechnicianPatientsTests">
           <ScalarProperty Name="TechnicianId" ColumnName="TechnicianId" />
           <ScalarProperty Name="Dated" ColumnName="Dated" />
@@ -153,7 +162,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Templates">
-      <EntityTypeMapping TypeName="AsiaLabDbModel.Template">
+      <EntityTypeMapping TypeName="AsiaLabDbModel1.Template">
         <MappingFragment StoreEntitySet="Template">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -164,7 +173,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="TestCategories">
-      <EntityTypeMapping TypeName="AsiaLabDbModel.TestCategory">
+      <EntityTypeMapping TypeName="AsiaLabDbModel1.TestCategory">
         <MappingFragment StoreEntitySet="TestCategories">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="TestCategoryCode" ColumnName="TestCategoryCode" />
@@ -173,8 +182,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="TestDepartments">
+      <EntityTypeMapping TypeName="AsiaLabDbModel1.TestDepartment">
+        <MappingFragment StoreEntitySet="TestDepartment">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="TestSubcategories">
-      <EntityTypeMapping TypeName="AsiaLabDbModel.TestSubcategory">
+      <EntityTypeMapping TypeName="AsiaLabDbModel1.TestSubcategory">
         <MappingFragment StoreEntitySet="TestSubcategories">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="TestSubcategoryName" ColumnName="TestSubcategoryName" />
@@ -187,7 +204,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="UserEmployees">
-      <EntityTypeMapping TypeName="AsiaLabDbModel.UserEmployee">
+      <EntityTypeMapping TypeName="AsiaLabDbModel1.UserEmployee">
         <MappingFragment StoreEntitySet="UserEmployee">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -198,32 +215,10 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="UserTypes">
-      <EntityTypeMapping TypeName="AsiaLabDbModel.UserType">
+      <EntityTypeMapping TypeName="AsiaLabDbModel1.UserType">
         <MappingFragment StoreEntitySet="UserType">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="TypeDescription" ColumnName="TypeDescription" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <AssociationSetMapping Name="ReferReferDoctorCommision" TypeName="AsiaLabDbModel.ReferReferDoctorCommision" StoreEntitySet="Refers">
-      <EndProperty Name="Refer">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <EntitySetMapping Name="ReferDoctorCommisions">
-      <EntityTypeMapping TypeName="IsTypeOf(AsiaLabDbModel.ReferDoctorCommision)">
-        <MappingFragment StoreEntitySet="Refers">
-          <ScalarProperty Name="ReferDocId" ColumnName="Id" />
-        </MappingFragment>
-        <MappingFragment StoreEntitySet="TestDepartment">
-          <ScalarProperty Name="DeptId" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TestDepartments">
-      <EntityTypeMapping TypeName="IsTypeOf(AsiaLabDbModel.TestDepartment)">
-        <MappingFragment StoreEntitySet="TestCategories">
-          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

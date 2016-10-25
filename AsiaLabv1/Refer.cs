@@ -17,6 +17,7 @@ namespace AsiaLabv1
         public Refer()
         {
             this.PatientRefers = new HashSet<PatientRefer>();
+            this.ReferDoctorCommisions = new HashSet<ReferDoctorCommision>();
         }
     
         public int Id { get; set; }
@@ -27,5 +28,6 @@ namespace AsiaLabv1
         public Nullable<double> commission { get; set; }
     
         public virtual ICollection<PatientRefer> PatientRefers { get; set; }
+        public virtual ICollection<ReferDoctorCommision> ReferDoctorCommisions { get; set; }
     }
 }

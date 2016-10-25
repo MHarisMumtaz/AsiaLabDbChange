@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="86a5b3f06d8b4b98a14ea571f11c4e7b" Name="Diagram1">
+        <EntityTypeShape EntityType="AsiaLabDbModel1.Address" Width="1.5" PointX="5.25" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AsiaLabDbModel1.Branch" Width="1.5" PointX="0.75" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AsiaLabDbModel1.Contact" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AsiaLabDbModel1.DoctorComment" Width="1.5" PointX="10.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AsiaLabDbModel1.DoctorPatientsTest" Width="1.5" PointX="10.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AsiaLabDbModel1.Gender" Width="1.5" PointX="3.75" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AsiaLabDbModel1.Patient" Width="1.5" PointX="6" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AsiaLabDbModel1.PatientRefer" Width="1.5" PointX="8.25" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="AsiaLabDbModel1.PatientTestResult" Width="1.5" PointX="11.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AsiaLabDbModel1.PatientTest" Width="1.5" PointX="8.25" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="AsiaLabDbModel1.Payment" Width="1.5" PointX="11.25" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AsiaLabDbModel1.PayType" Width="1.5" PointX="9" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AsiaLabDbModel1.ReferDoctorCommision" Width="1.5" PointX="8.25" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AsiaLabDbModel1.Refer" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AsiaLabDbModel1.TechnicianPatientsTest" Width="1.5" PointX="12.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AsiaLabDbModel1.Template" Width="1.5" PointX="12.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AsiaLabDbModel1.TestCategory" Width="1.5" PointX="3.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AsiaLabDbModel1.TestDepartment" Width="1.5" PointX="1.5" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AsiaLabDbModel1.TestSubcategory" Width="1.5" PointX="6" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AsiaLabDbModel1.UserEmployee" Width="1.5" PointX="3" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AsiaLabDbModel1.UserType" Width="1.5" PointX="3" PointY="19.125" IsExpanded="true" />
+        <AssociationConnector Association="AsiaLabDbModel1.FK_Address_Gender" ManuallyRouted="false" />
+        <AssociationConnector Association="AsiaLabDbModel1.FK_Address_UserEmployee" ManuallyRouted="false" />
+        <AssociationConnector Association="AsiaLabDbModel1.FK_Address_UserType" ManuallyRouted="false" />
+        <AssociationConnector Association="AsiaLabDbModel1.FK_Contact_Branches" ManuallyRouted="false" />
+        <AssociationConnector Association="AsiaLabDbModel1.FK_Patient_Branches" ManuallyRouted="false" />
+        <AssociationConnector Association="AsiaLabDbModel1.FK_UserEmployee_Branches" ManuallyRouted="false" />
+        <AssociationConnector Association="AsiaLabDbModel1.FK_Patient_Gender" ManuallyRouted="false" />
+        <AssociationConnector Association="AsiaLabDbModel1.FK_PatientRefer_Patient" ManuallyRouted="false" />
+        <AssociationConnector Association="AsiaLabDbModel1.FK_PatientTests_Patient" ManuallyRouted="false" />
+        <AssociationConnector Association="AsiaLabDbModel1.FK_Payment_Patient" ManuallyRouted="false" />
+        <AssociationConnector Association="AsiaLabDbModel1.FK_PatientRefer_Refers" ManuallyRouted="false" />
+        <AssociationConnector Association="AsiaLabDbModel1.FK_PatientTests_TestSubcategories" ManuallyRouted="false" />
+        <AssociationConnector Association="AsiaLabDbModel1.FK_Payment_PayType" ManuallyRouted="false" />
+        <AssociationConnector Association="AsiaLabDbModel1.FK_ReferDoctorCommisions_Refers" ManuallyRouted="false" />
+        <AssociationConnector Association="AsiaLabDbModel1.FK_ReferDoctorCommisions_TestDepartment" ManuallyRouted="false" />
+        <AssociationConnector Association="AsiaLabDbModel1.FK_TestCategories_TestDepartment" ManuallyRouted="false" />
+        <AssociationConnector Association="AsiaLabDbModel1.FK_TestSubcategories_TestCategories" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

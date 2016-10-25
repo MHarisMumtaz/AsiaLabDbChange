@@ -13,10 +13,10 @@ namespace AsiaLabv1
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class AsiaLabDbEntities : DbContext
+    public partial class AsiaLabDbEntities1 : DbContext
     {
-        public AsiaLabDbEntities()
-            : base("name=AsiaLabDbEntities")
+        public AsiaLabDbEntities1()
+            : base("name=AsiaLabDbEntities1")
         {
         }
     
@@ -37,6 +37,7 @@ namespace AsiaLabv1
         public DbSet<PatientTest> PatientTests { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<PayType> PayTypes { get; set; }
+        public DbSet<ReferDoctorCommision> ReferDoctorCommisions { get; set; }
         public DbSet<Refer> Refers { get; set; }
         public DbSet<TechnicianPatientsTest> TechnicianPatientsTests { get; set; }
         public DbSet<Template> Templates { get; set; }

@@ -12,18 +12,13 @@ namespace AsiaLabv1
     using System;
     using System.Collections.Generic;
     
-    public partial class TestDepartment
+    public partial class ReferDoctorCommision
     {
-        public TestDepartment()
-        {
-            this.ReferDoctorCommisions = new HashSet<ReferDoctorCommision>();
-            this.TestCategories = new HashSet<TestCategory>();
-        }
+        public int ReferDoctorId { get; set; }
+        public int DeptId { get; set; }
+        public double Commision { get; set; }
     
-        public int Id { get; set; }
-        public string DepartmentName { get; set; }
-    
-        public virtual ICollection<ReferDoctorCommision> ReferDoctorCommisions { get; set; }
-        public virtual ICollection<TestCategory> TestCategories { get; set; }
+        public virtual Refer Refer { get; set; }
+        public virtual TestDepartment TestDepartment { get; set; }
     }
 }

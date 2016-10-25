@@ -7,8 +7,8 @@ namespace AsiaLabv1.Repositories
 {
     public class StaticDbContext
     {
-        protected static AsiaLabDbEntities Context = new AsiaLabDbEntities();
-        public static AsiaLabDbEntities context
+        protected static AsiaLabDbEntities1 Context = new AsiaLabDbEntities1();
+        public static AsiaLabDbEntities1 context
         {
             get
             {

@@ -9,7 +9,7 @@ namespace AsiaLabv1.Repositories
     public class Repository<T> where T : class
     {
 
-        protected static AsiaLabDbEntities Context;
+        protected static AsiaLabDbEntities1 Context;
         public DbSet<T> Table { get; set; }
 
         public Repository()

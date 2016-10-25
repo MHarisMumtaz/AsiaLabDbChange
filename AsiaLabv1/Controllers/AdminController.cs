@@ -26,7 +26,7 @@ namespace AsiaLabv1.Controllers
         ReferDoctorsService ReferDoctorsServices = new ReferDoctorsService();
         PatientPaymentService PatientsPaymentService = new PatientPaymentService();
         PatientService PatientServices = new PatientService();
-
+        ReferDoctorCommisionService ReferDoctorCommisionServices = new ReferDoctorCommisionService();
         #endregion
 
         public static int CategId = 0;
@@ -431,20 +431,39 @@ namespace AsiaLabv1.Controllers
         public ActionResult DoctorReferrals()
         {
             ReferredModel model = new ReferredModel();
+            var allDept = TestDeptServices.GetAllDept();
+
+            foreach (var Dept in allDept)
+            {
+                model.Departments.Add(new SelectListItem
+                {
+                    Value = Dept.Id.ToString(),
+                    Text = Dept.DepartmentName
+                });
+            }
             return View(model);
         }
 
         [HttpPost]
         public ActionResult AddReferDoctor(ReferredModel model)
         {
-            ReferDoctorsServices.Add(new Refer
-            {
+            var refer = new Refer(){
                 ReferredDoctorName = model.ReferredDoctorName,
                 ReferredDocAddress = model.ReferredDocAddress,
                 ReferredDocNumber = model.ReferredDocNumber,
                 Remarks = model.Remarks,
                 commission = model.commission
-            });
+            };
+            ReferDoctorsServices.Add(refer);
+            foreach (var Dept in model.DocDeptsCommision)
+            {
+               ReferDoctorCommisionServices.Add(new ReferDoctorCommision
+                {
+                    ReferDoctorId = refer.Id,
+                    DeptId = Dept.DeptId,
+                    Commision = Dept.Commision
+                }); 
+            }
             //return new JsonResult(); 
             return RedirectToAction("DoctorReferrals", "Admin");
 

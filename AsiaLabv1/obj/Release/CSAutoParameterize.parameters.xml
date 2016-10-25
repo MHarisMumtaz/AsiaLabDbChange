@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="AsiaLabDbEntities-Web.config Connection String" description="AsiaLabDbEntities Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/AsiaLabDb.csdl|res://*/AsiaLabDb.ssdl|res://*/AsiaLabDb.msl;provider=System.Data.SqlClient;provider connection string=&quot;Server=tcp:asialab.database.windows.net,1433;Database=AsiaLabDb;User ID=asialab@asialab;Password=Asia+Lab2016;Encrypt=True;TrustServerCertificate=False;Connection timeout=30;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\abdul\.sattar\\Downloads\\AsiaLabV3\\AsiaLabv\.3\ \(Latest\)\\AsiaLabv1\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='AsiaLabDbEntities']/@connectionString" />
+  </parameter>
+</parameters>

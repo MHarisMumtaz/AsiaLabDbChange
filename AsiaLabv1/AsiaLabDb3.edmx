@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="AsiaLabDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="AsiaLabDbModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="Id" />
@@ -125,6 +125,15 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReferDoctorCommisions">
+          <Key>
+            <PropertyRef Name="ReferDoctorId" />
+            <PropertyRef Name="DeptId" />
+          </Key>
+          <Property Name="ReferDoctorId" Type="int" Nullable="false" />
+          <Property Name="DeptId" Type="int" Nullable="false" />
+          <Property Name="Commision" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="Refers">
           <Key>
@@ -345,6 +354,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ReferDoctorCommisions_Refers">
+          <End Role="Refers" Type="Self.Refers" Multiplicity="1" />
+          <End Role="ReferDoctorCommisions" Type="Self.ReferDoctorCommisions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Refers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReferDoctorCommisions">
+              <PropertyRef Name="ReferDoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReferDoctorCommisions_TestDepartment">
+          <End Role="TestDepartment" Type="Self.TestDepartment" Multiplicity="1" />
+          <End Role="ReferDoctorCommisions" Type="Self.ReferDoctorCommisions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestDepartment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReferDoctorCommisions">
+              <PropertyRef Name="DeptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TestCategories_TestDepartment">
           <End Role="TestDepartment" Type="Self.TestDepartment" Multiplicity="1" />
           <End Role="TestCategories" Type="Self.TestCategories" Multiplicity="*" />
@@ -381,7 +414,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="AsiaLabDbModelStoreContainer">
+        <EntityContainer Name="AsiaLabDbModel1StoreContainer">
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Branches" EntityType="Self.Branches" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contact" EntityType="Self.Contact" Schema="dbo" store:Type="Tables" />
@@ -394,6 +427,7 @@
           <EntitySet Name="PatientTests" EntityType="Self.PatientTests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PayType" EntityType="Self.PayType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReferDoctorCommisions" EntityType="Self.ReferDoctorCommisions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Refers" EntityType="Self.Refers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TechnicianPatientsTests" EntityType="Self.TechnicianPatientsTests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Template" EntityType="Self.Template" Schema="dbo" store:Type="Tables" />
@@ -450,6 +484,14 @@
             <End Role="PayType" EntitySet="PayType" />
             <End Role="Payment" EntitySet="Payment" />
           </AssociationSet>
+          <AssociationSet Name="FK_ReferDoctorCommisions_Refers" Association="Self.FK_ReferDoctorCommisions_Refers">
+            <End Role="Refers" EntitySet="Refers" />
+            <End Role="ReferDoctorCommisions" EntitySet="ReferDoctorCommisions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReferDoctorCommisions_TestDepartment" Association="Self.FK_ReferDoctorCommisions_TestDepartment">
+            <End Role="TestDepartment" EntitySet="TestDepartment" />
+            <End Role="ReferDoctorCommisions" EntitySet="ReferDoctorCommisions" />
+          </AssociationSet>
           <AssociationSet Name="FK_TestCategories_TestDepartment" Association="Self.FK_TestCategories_TestDepartment">
             <End Role="TestDepartment" EntitySet="TestDepartment" />
             <End Role="TestCategories" EntitySet="TestCategories" />
@@ -467,7 +509,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="AsiaLabDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="AsiaLabDbModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="Id" />
@@ -610,6 +652,17 @@
           <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_PayType" FromRole="PayType" ToRole="Payment" />
         </EntityType>
+        <EntityType Name="ReferDoctorCommision">
+          <Key>
+            <PropertyRef Name="ReferDoctorId" />
+            <PropertyRef Name="DeptId" />
+          </Key>
+          <Property Name="ReferDoctorId" Type="Int32" Nullable="false" />
+          <Property Name="DeptId" Type="Int32" Nullable="false" />
+          <Property Name="Commision" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Refer" Relationship="Self.FK_ReferDoctorCommisions_Refers" FromRole="ReferDoctorCommisions" ToRole="Refers" />
+          <NavigationProperty Name="TestDepartment" Relationship="Self.FK_ReferDoctorCommisions_TestDepartment" FromRole="ReferDoctorCommisions" ToRole="TestDepartment" />
+        </EntityType>
         <EntityType Name="Refer">
           <Key>
             <PropertyRef Name="Id" />
@@ -621,6 +674,7 @@
           <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="commission" Type="Double" />
           <NavigationProperty Name="PatientRefers" Relationship="Self.FK_PatientRefer_Refers" FromRole="Refers" ToRole="PatientRefer" />
+          <NavigationProperty Name="ReferDoctorCommisions" Relationship="Self.FK_ReferDoctorCommisions_Refers" FromRole="Refers" ToRole="ReferDoctorCommisions" />
         </EntityType>
         <EntityType Name="TechnicianPatientsTest">
           <Key>
@@ -658,6 +712,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DepartmentName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ReferDoctorCommisions" Relationship="Self.FK_ReferDoctorCommisions_TestDepartment" FromRole="TestDepartment" ToRole="ReferDoctorCommisions" />
           <NavigationProperty Name="TestCategories" Relationship="Self.FK_TestCategories_TestDepartment" FromRole="TestDepartment" ToRole="TestCategories" />
         </EntityType>
         <EntityType Name="TestSubcategory">
@@ -850,6 +905,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ReferDoctorCommisions_Refers">
+          <End Role="Refers" Type="Self.Refer" Multiplicity="1" />
+          <End Role="ReferDoctorCommisions" Type="Self.ReferDoctorCommision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Refers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReferDoctorCommisions">
+              <PropertyRef Name="ReferDoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReferDoctorCommisions_TestDepartment">
+          <End Role="TestDepartment" Type="Self.TestDepartment" Multiplicity="1" />
+          <End Role="ReferDoctorCommisions" Type="Self.ReferDoctorCommision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestDepartment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ReferDoctorCommisions">
+              <PropertyRef Name="DeptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TestCategories_TestDepartment">
           <End Role="TestDepartment" Type="Self.TestDepartment" Multiplicity="1" />
           <End Role="TestCategories" Type="Self.TestCategory" Multiplicity="*" />
@@ -874,7 +953,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="AsiaLabDbEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="AsiaLabDbEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Addresses" EntityType="Self.Address" />
           <EntitySet Name="Branches" EntityType="Self.Branch" />
           <EntitySet Name="Contacts" EntityType="Self.Contact" />
@@ -887,6 +966,7 @@
           <EntitySet Name="PatientTests" EntityType="Self.PatientTest" />
           <EntitySet Name="Payments" EntityType="Self.Payment" />
           <EntitySet Name="PayTypes" EntityType="Self.PayType" />
+          <EntitySet Name="ReferDoctorCommisions" EntityType="Self.ReferDoctorCommision" />
           <EntitySet Name="Refers" EntityType="Self.Refer" />
           <EntitySet Name="TechnicianPatientsTests" EntityType="Self.TechnicianPatientsTest" />
           <EntitySet Name="Templates" EntityType="Self.Template" />
@@ -947,6 +1027,14 @@
             <End Role="PayType" EntitySet="PayTypes" />
             <End Role="Payment" EntitySet="Payments" />
           </AssociationSet>
+          <AssociationSet Name="FK_ReferDoctorCommisions_Refers" Association="Self.FK_ReferDoctorCommisions_Refers">
+            <End Role="Refers" EntitySet="Refers" />
+            <End Role="ReferDoctorCommisions" EntitySet="ReferDoctorCommisions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReferDoctorCommisions_TestDepartment" Association="Self.FK_ReferDoctorCommisions_TestDepartment">
+            <End Role="TestDepartment" EntitySet="TestDepartments" />
+            <End Role="ReferDoctorCommisions" EntitySet="ReferDoctorCommisions" />
+          </AssociationSet>
           <AssociationSet Name="FK_TestCategories_TestDepartment" Association="Self.FK_TestCategories_TestDepartment">
             <End Role="TestDepartment" EntitySet="TestDepartments" />
             <End Role="TestCategories" EntitySet="TestCategories" />
@@ -961,9 +1049,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="AsiaLabDbModelStoreContainer" CdmEntityContainer="AsiaLabDbEntities">
+        <EntityContainerMapping StorageEntityContainer="AsiaLabDbModel1StoreContainer" CdmEntityContainer="AsiaLabDbEntities1">
           <EntitySetMapping Name="Addresses">
-            <EntityTypeMapping TypeName="AsiaLabDbModel.Address">
+            <EntityTypeMapping TypeName="AsiaLabDbModel1.Address">
               <MappingFragment StoreEntitySet="Address">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="UserEmployeeId" ColumnName="UserEmployeeId" />
@@ -978,7 +1066,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Branches">
-            <EntityTypeMapping TypeName="AsiaLabDbModel.Branch">
+            <EntityTypeMapping TypeName="AsiaLabDbModel1.Branch">
               <MappingFragment StoreEntitySet="Branches">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="BranchName" ColumnName="BranchName" />
@@ -988,7 +1076,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Contacts">
-            <EntityTypeMapping TypeName="AsiaLabDbModel.Contact">
+            <EntityTypeMapping TypeName="AsiaLabDbModel1.Contact">
               <MappingFragment StoreEntitySet="Contact">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="BranchId" ColumnName="BranchId" />
@@ -997,7 +1085,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DoctorComments">
-            <EntityTypeMapping TypeName="AsiaLabDbModel.DoctorComment">
+            <EntityTypeMapping TypeName="AsiaLabDbModel1.DoctorComment">
               <MappingFragment StoreEntitySet="DoctorComments">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="PatientId" ColumnName="PatientId" />
@@ -1007,7 +1095,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DoctorPatientsTests">
-            <EntityTypeMapping TypeName="AsiaLabDbModel.DoctorPatientsTest">
+            <EntityTypeMapping TypeName="AsiaLabDbModel1.DoctorPatientsTest">
               <MappingFragment StoreEntitySet="DoctorPatientsTest">
                 <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
                 <ScalarProperty Name="PatientId" ColumnName="PatientId" />
@@ -1017,7 +1105,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Genders">
-            <EntityTypeMapping TypeName="AsiaLabDbModel.Gender">
+            <EntityTypeMapping TypeName="AsiaLabDbModel1.Gender">
               <MappingFragment StoreEntitySet="Gender">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="GenderDescription" ColumnName="GenderDescription" />
@@ -1025,7 +1113,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Patients">
-            <EntityTypeMapping TypeName="AsiaLabDbModel.Patient">
+            <EntityTypeMapping TypeName="AsiaLabDbModel1.Patient">
               <MappingFragment StoreEntitySet="Patient">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="PatientName" ColumnName="PatientName" />
@@ -1041,7 +1129,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PatientRefers">
-            <EntityTypeMapping TypeName="AsiaLabDbModel.PatientRefer">
+            <EntityTypeMapping TypeName="AsiaLabDbModel1.PatientRefer">
               <MappingFragment StoreEntitySet="PatientRefer">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ReferId" ColumnName="ReferId" />
@@ -1050,7 +1138,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PatientTestResults">
-            <EntityTypeMapping TypeName="AsiaLabDbModel.PatientTestResult">
+            <EntityTypeMapping TypeName="AsiaLabDbModel1.PatientTestResult">
               <MappingFragment StoreEntitySet="PatientTestResults">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="PatientTestId" ColumnName="PatientTestId" />
@@ -1061,7 +1149,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PatientTests">
-            <EntityTypeMapping TypeName="AsiaLabDbModel.PatientTest">
+            <EntityTypeMapping TypeName="AsiaLabDbModel1.PatientTest">
               <MappingFragment StoreEntitySet="PatientTests">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="TestSubcategoryId" ColumnName="TestSubcategoryId" />
@@ -1070,7 +1158,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Payments">
-            <EntityTypeMapping TypeName="AsiaLabDbModel.Payment">
+            <EntityTypeMapping TypeName="AsiaLabDbModel1.Payment">
               <MappingFragment StoreEntitySet="Payment">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="PatientId" ColumnName="PatientId" />
@@ -1084,15 +1172,24 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PayTypes">
-            <EntityTypeMapping TypeName="AsiaLabDbModel.PayType">
+            <EntityTypeMapping TypeName="AsiaLabDbModel1.PayType">
               <MappingFragment StoreEntitySet="PayType">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ReferDoctorCommisions">
+            <EntityTypeMapping TypeName="AsiaLabDbModel1.ReferDoctorCommision">
+              <MappingFragment StoreEntitySet="ReferDoctorCommisions">
+                <ScalarProperty Name="ReferDoctorId" ColumnName="ReferDoctorId" />
+                <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+                <ScalarProperty Name="Commision" ColumnName="Commision" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Refers">
-            <EntityTypeMapping TypeName="AsiaLabDbModel.Refer">
+            <EntityTypeMapping TypeName="AsiaLabDbModel1.Refer">
               <MappingFragment StoreEntitySet="Refers">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ReferredDoctorName" ColumnName="ReferredDoctorName" />
@@ -1104,7 +1201,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TechnicianPatientsTests">
-            <EntityTypeMapping TypeName="AsiaLabDbModel.TechnicianPatientsTest">
+            <EntityTypeMapping TypeName="AsiaLabDbModel1.TechnicianPatientsTest">
               <MappingFragment StoreEntitySet="TechnicianPatientsTests">
                 <ScalarProperty Name="TechnicianId" ColumnName="TechnicianId" />
                 <ScalarProperty Name="Dated" ColumnName="Dated" />
@@ -1114,7 +1211,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Templates">
-            <EntityTypeMapping TypeName="AsiaLabDbModel.Template">
+            <EntityTypeMapping TypeName="AsiaLabDbModel1.Template">
               <MappingFragment StoreEntitySet="Template">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1125,7 +1222,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TestCategories">
-            <EntityTypeMapping TypeName="AsiaLabDbModel.TestCategory">
+            <EntityTypeMapping TypeName="AsiaLabDbModel1.TestCategory">
               <MappingFragment StoreEntitySet="TestCategories">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="TestCategoryCode" ColumnName="TestCategoryCode" />
@@ -1135,7 +1232,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TestDepartments">
-            <EntityTypeMapping TypeName="AsiaLabDbModel.TestDepartment">
+            <EntityTypeMapping TypeName="AsiaLabDbModel1.TestDepartment">
               <MappingFragment StoreEntitySet="TestDepartment">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
@@ -1143,7 +1240,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TestSubcategories">
-            <EntityTypeMapping TypeName="AsiaLabDbModel.TestSubcategory">
+            <EntityTypeMapping TypeName="AsiaLabDbModel1.TestSubcategory">
               <MappingFragment StoreEntitySet="TestSubcategories">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="TestSubcategoryName" ColumnName="TestSubcategoryName" />
@@ -1156,7 +1253,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserEmployees">
-            <EntityTypeMapping TypeName="AsiaLabDbModel.UserEmployee">
+            <EntityTypeMapping TypeName="AsiaLabDbModel1.UserEmployee">
               <MappingFragment StoreEntitySet="UserEmployee">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1167,7 +1264,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserTypes">
-            <EntityTypeMapping TypeName="AsiaLabDbModel.UserType">
+            <EntityTypeMapping TypeName="AsiaLabDbModel1.UserType">
               <MappingFragment StoreEntitySet="UserType">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="TypeDescription" ColumnName="TypeDescription" />

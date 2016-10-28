@@ -464,9 +464,7 @@ namespace AsiaLabv1.Controllers
                     Commision = Dept.Commision
                 }); 
             }
-            //return new JsonResult(); 
-            return RedirectToAction("DoctorReferrals", "Admin");
-
+            return Json("success",JsonRequestBehavior.AllowGet);
         }
 
 

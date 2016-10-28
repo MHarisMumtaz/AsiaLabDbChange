@@ -253,9 +253,11 @@ width:60%; height:20%; margin:auto; padding:10px'>
     var doctorCommisions = [];
     $('#loadspinner').hide();
     function addCommision() {
+        var deptName = $("#DeptId :selected").text();
         var docCommision = {
             DeptId: $("#DeptId").val(),
-            Commision: $("#commision").val()
+            DeptName : deptName,
+            Commision: $("#commision").val(),
         };
         $('#SelectedDepart').empty();
         var isCommisionExist = false;
@@ -264,11 +266,11 @@ width:60%; height:20%; margin:auto; padding:10px'>
                 doctorCommisions[i].Commision = docCommision.Commision;
                 isCommisionExist = true;
             }
-            $('#SelectedDepart').append("<div style='width:1400px' class='row show-grid'> <div class='col-md-1'>" + doctorCommisions[i].DeptId + "</div> <div class='col-xs-6 col-sm-4'>" + doctorCommisions[i].Commision + "</div></div>");
+            $('#SelectedDepart').append("<div style='width:1400px' class='row show-grid'> <div class='col-md-1'>" + doctorCommisions[i].DeptName + "</div> <div class='col-xs-6 col-sm-4'>" + doctorCommisions[i].Commision + "</div></div>");
         }
         if (!isCommisionExist) {
             doctorCommisions.push(docCommision);
-            $('#SelectedDepart').append("<div style='width:1400px' class='row show-grid'> <div class='col-md-1'>" + docCommision.DeptId + "</div> <div class='col-xs-6 col-sm-4'>" + docCommision.Commision + "</div></div>");
+            $('#SelectedDepart').append("<div style='width:1400px' class='row show-grid'> <div class='col-md-1'>" + docCommision.DeptName + "</div> <div class='col-xs-6 col-sm-4'>" + docCommision.Commision + "</div></div>");
         }
         
         //var deptId = $("#DeptId").val();
@@ -291,7 +293,8 @@ width:60%; height:20%; margin:auto; padding:10px'>
             contentType: "application/json",
         dataType: "json",
         success: function (data) {
-          
+            $('#loadspinner').hide();
+            alert("Doctor Successfully Added.!");
         }, error: function (err) {
 
         }

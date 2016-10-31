@@ -70,6 +70,7 @@
                     <i id="loadspinner" style="margin-left:45%" class="fa fa-spinner fa-spin fa-2x fa-fw"></i>
                     <br />
                     <br />
+                   
                     <div class="horz-grid">
                         <div class="grid-hor">
                             <h4 id="grid-example-mixed-complete">Patients List</h4>
@@ -92,13 +93,14 @@
 
                     </div>
                 </form>
+                <button onclick="generateRecipts()">click to generate pdf</button>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-
+    
     function recipt(id){
        var patientId=id;
             $.ajax({
@@ -108,7 +110,8 @@
                 contentType: "application/json",
                 dataType: 'json',
                 success: function (data) {
-                    alert(data);
+                    generateRecipt(data);
+                    //alert(data);
                 }, error: function (err) {
                     alert(err);
                 }

@@ -54,6 +54,7 @@ namespace AsiaLabv1.Models
         public string Status { get; set; }
         public DateTime? Date { get; set; }
         public string Age { get; set; }
+        public string GenderDesc { get; set; }
         public PatientModel()
         {
             this.PayTypes = new List<SelectListItem>();

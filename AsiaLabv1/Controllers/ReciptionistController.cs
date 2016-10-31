@@ -170,7 +170,7 @@ namespace AsiaLabv1.Controllers
                     model.Age = (DateTime.Now.Year - model.DateofBirth.Year).ToString();
 
                     PatientServices.Add(model);
-                    List<TestSubcategory> selectedTests = new List<TestSubcategory>();
+                    List<TestSubCategoryModel> selectedTests = new List<TestSubCategoryModel>();
                     double netAmount = 0;
                     foreach (var TestId in model.PatientTestIds)
                     {
@@ -180,7 +180,11 @@ namespace AsiaLabv1.Controllers
                             TestSubcategoryId = TestId
                         });
                         var test = TestSubCategoryServices.getById(TestId);
-                        selectedTests.Add(test);
+                        selectedTests.Add(new TestSubCategoryModel{
+                        Rate=test.Rate,
+                        TestSubcategoryName=test.TestSubcategoryName,
+                        Unit=test.Unit});
+
                         netAmount = netAmount + test.Rate;
                     }
 
@@ -216,10 +220,20 @@ namespace AsiaLabv1.Controllers
                     var branchContact = BranchServices.GetBranchContact(branch.Id);
                     
                     SmsServices.SendSms(model.PhoneNumber, model.Id);
+                    var ReciptModels = new ReciptModel()
+                    {
+                        Branch = new BranchModel
+                        {
+                            Address = branch.BranchAddress,
+                            Contact = branchContact.BranchContactNo,
+                            Name = branch.BranchName
+                        },
+                        PatientDetails = model,
+                        PatientTests = selectedTests
+                    };
+                   // var pdfDocModel = GeneratePatientRecipt(model, gender, selectedTests, branch, branchContact);
 
-                    var pdfDocModel = GeneratePatientRecipt(model, gender, selectedTests, branch, branchContact);
-
-                    return Json(pdfDocModel, JsonRequestBehavior.AllowGet);
+                    return Json(ReciptModels, JsonRequestBehavior.AllowGet);
                 }
                 return Json("Please assign tests to patients", JsonRequestBehavior.AllowGet);
 
@@ -256,8 +270,7 @@ namespace AsiaLabv1.Controllers
         [HttpGet]
         public ActionResult Recipt(int Id)
         {
-            try
-            {
+            
                 var patient = PatientServices.GetByPatientId(Id);
                 var gender = GenderServices.GetById(patient.GenderId);
                 var branch = BranchServices.GetById(patient.BranchId);
@@ -265,7 +278,23 @@ namespace AsiaLabv1.Controllers
                 var refer = ReferDoctorsServices.GetPatientReferById(patient.Id);
                 var SubTestList = PatientTestService.GetSubCategoryByPatientId(patient.Id);
                 var payment = PaymentServices.GetPaymentByPatientId(patient.Id);
-
+                var testList = new List<TestSubCategoryModel>();
+                foreach (var item in SubTestList)
+                {
+                    testList.Add(new TestSubCategoryModel
+                    {
+                        TestSubcategoryName = item.TestSubcategoryName,
+                        Unit = item.Unit,
+                        Rate = item.Rate
+                    });
+                }
+          
+                var branchModel = new BranchModel()
+                {
+                    Name = branch.BranchName,
+                    Address = branch.BranchAddress,
+                    Contact = branchContact.BranchContactNo
+                };
                 var model = new PatientModel
                 {
                     Id = patient.Id,
@@ -275,17 +304,18 @@ namespace AsiaLabv1.Controllers
                     Email = patient.Email,
                     Discount = payment.Discount,
                     PaidAmount = payment.PaidAmount,
-                    PhoneNumber = patient.PatientNumber
+                    PhoneNumber = patient.PatientNumber,
+                    GenderDesc = gender.GenderDescription
                 };
+                ReciptModel recipt = new ReciptModel();
+                recipt.PatientDetails = model;
+                recipt.Branch = branchModel;
+                recipt.PatientTests = testList;
+                recipt.LogedInUser = Session["loginusername"].ToString();
+    
+                //var pdfDocModel = GeneratePatientRecipt(model, gender, SubTestList, branch, branchContact);
 
-                var pdfDocModel = GeneratePatientRecipt(model, gender, SubTestList, branch, branchContact);
-
-                return Json(pdfDocModel, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                return Json(ex, JsonRequestBehavior.AllowGet);
-            }
+                return Json(recipt, JsonRequestBehavior.AllowGet);
             
         }
 

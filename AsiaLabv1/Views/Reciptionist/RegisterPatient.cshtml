@@ -179,6 +179,7 @@
                     <div style="margin-top:20px; margin-left:5%" class="form-group">
                         <input type="button" value="Submit" class="btn btn-danger" onclick="RegisterPatient()" />
                     </div>
+                   
                     <br />
                     <label class="control-label" id="error" style="color:red; margin-left:35%">Please Fill All the Required Fields</label>
                     <i id="spin" style="margin-left: 35%" class="fa fa-spinner fa-spin fa-2x fa-fw"></i>
@@ -262,6 +263,7 @@
                                     dataType: 'json',
                                     success: function (data) {
                                         //alert(data);
+                                        generateRecipt(data);
                                         $('#spin').hide();
                                         $('#myDiv').show();
                                         $('#myDiv').fadeOut(4000);
@@ -387,6 +389,7 @@
                             });
                         }
 
+                       
 
 
                     </script>

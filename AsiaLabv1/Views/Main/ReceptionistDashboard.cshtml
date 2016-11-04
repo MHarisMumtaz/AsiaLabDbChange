@@ -93,7 +93,6 @@
 
                     </div>
                 </form>
-                <button onclick="generateRecipts()">click to generate pdf</button>
             </div>
         </div>
     </div>
@@ -128,7 +127,7 @@
             contentType: "application/json",
             dataType: 'json',
             success: function (data) {
-                alert(data);
+                generatePatientReport(data);
             }, error: function (err) {
                 alert(err);
             }

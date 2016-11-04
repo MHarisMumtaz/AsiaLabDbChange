@@ -515,6 +515,8 @@ namespace AsiaLabv1.Controllers
         public ActionResult DeleteDoc(string models)
         {
             IList<ReferredModel> objName = new JavaScriptSerializer().Deserialize<IList<ReferredModel>>(models);
+            var commisions = ReferDoctorCommisionServices.GetByReferDoctorId(objName[0].Id);
+            ReferDoctorCommisionServices.Delete(commisions);
             ReferDoctorsServices.Delete(Convert.ToInt16(objName[0].Id));
             return Json("Record Deleted", JsonRequestBehavior.AllowGet);
         }

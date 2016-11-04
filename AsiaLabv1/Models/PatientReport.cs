@@ -58,7 +58,7 @@ namespace AsiaLabv1.Models
 
 
             XImage mg = System.Drawing.Image.FromFile(path + "Logo.jpg");
-            graph.DrawImage(mg, 25, 30, 250, 50);
+            graph.DrawImage(mg,25, 30, 250, 50);
 
             WriteTextOnPdf(graph, font, pdfPage, model[0].TestCategoryName, 130, 150);
 

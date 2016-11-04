@@ -220,6 +220,7 @@ namespace AsiaLabv1.Controllers
                     var branchContact = BranchServices.GetBranchContact(branch.Id);
                     
                     SmsServices.SendSms(model.PhoneNumber, model.Id);
+                    model.GenderDesc = gender.GenderDescription;
                     var ReciptModels = new ReciptModel()
                     {
                         Branch = new BranchModel
@@ -231,6 +232,7 @@ namespace AsiaLabv1.Controllers
                         PatientDetails = model,
                         PatientTests = selectedTests
                     };
+                    ReciptModels.LogedInUser = Session["loginusername"].ToString();
                    // var pdfDocModel = GeneratePatientRecipt(model, gender, selectedTests, branch, branchContact);
 
                     return Json(ReciptModels, JsonRequestBehavior.AllowGet);
@@ -326,15 +328,37 @@ namespace AsiaLabv1.Controllers
             {
                 string ReturnMessage = "Report Generated";
                 var TestReportDetailsList = PatientTestService.GetPatientTestsDetails(PatientId);
-
                 var ReferDoctor = ReferDoctorsServices.GetPatientReferById(PatientId);
                 var BranchName = Session["branch"].ToString();
                 var Patient = PatientServices.GetByPatientId(PatientId);
                 var PatientDoctor = DoctorPatientServices.GetDoctorByPatientId(PatientId);
+                var Refer = new ReferredModel()
+                {
+                    ReferredDoctorName = ReferDoctor.ReferredDoctorName
+                };
+                var Patientmodel = new PatientModel()
+                {
+                    Id = Patient.Id,
+                    Name = Patient.PatientName,
+                    GenderDesc = Patient.Gender.GenderDescription,
+                    Age = Patient.Age,
+                    dateTime = Patient.DateTime.ToString()
+                };
+                var patientDoctor = new UserModel()
+                {
+                    Name = PatientDoctor.Name
+                };
+                var ReportDetails = new TestResultsReportModel()
+                {
+                    Branch = BranchName,
+                    PatientDoctor = patientDoctor,
+                    PatientInfo = Patientmodel,
+                    tests = TestReportDetailsList,
+                    ReferDoc = Refer
+                };
+              //  GeneratePatientReport(TestReportDetailsList, ReferDoctor, Patient, PatientDoctor, BranchName);
 
-                GeneratePatientReport(TestReportDetailsList, ReferDoctor, Patient, PatientDoctor, BranchName);
-
-                return Json(ReturnMessage, JsonRequestBehavior.AllowGet);
+                return Json(ReportDetails, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
